@@ -1,23 +1,19 @@
-import React, { useState } from "react";
+import { useContext } from "react";
 import logo from "../assets/logo.png";
+import { ApplicationContext } from "../contexts/ApplicationSharedContext";
 
 const Navbar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
-
+  const {
+    showMobileNav,
+    setShowMobileNav} = useContext(ApplicationContext)
   return (
-    <div>
+    <div className="">
       {/* Navbar */}
       <div className="navbar bg-base-100">
         <div className="navbar-start">
           {/* Menu button for smaller devices */}
-          <button
-            className="btn btn-ghost btn-circle lg:hidden"
-            onClick={toggleSidebar}
-          >
+          <button onClick={()=>setShowMobileNav(!showMobileNav)} className="btn btn-ghost btn-circle lg:hidden">
+            
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -41,13 +37,12 @@ const Navbar = () => {
           </div>
         </div>
         <div className="navbar-center">
-        <input
-        type="text"
-        value=''
-      
-        placeholder="Search Reddit"
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
+          <input
+            type="text"
+            value=""
+            placeholder="Search Reddit"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
         <div className="navbar-end flex items-center space-x-2">
           <button className="btn btn-sm bg-gray-200 text-gray-800 rounded-full px-4 hover:bg-gray-300">
@@ -74,59 +69,6 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-
-      {/* Sidebar */}
-      <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-base-200 transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 lg:translate-x-0 lg:relative lg:w-64`}
-      >
-        <div className="p-4">
-          <h2 className="text-xl font-bold mb-4">Menu</h2>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="#home"
-                className="block py-2 px-4 rounded hover:bg-base-300"
-              >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="#portfolio"
-                className="block py-2 px-4 rounded hover:bg-base-300"
-              >
-                Portfolio
-              </a>
-            </li>
-            <li>
-              <a
-                href="#about"
-                className="block py-2 px-4 rounded hover:bg-base-300"
-              >
-                About
-              </a>
-            </li>
-            <li>
-              <a
-                href="#contact"
-                className="block py-2 px-4 rounded hover:bg-base-300"
-              >
-                Contact
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Overlay for small screens */}
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 lg:hidden"
-          onClick={toggleSidebar}
-        ></div>
-      )}
     </div>
   );
 };
