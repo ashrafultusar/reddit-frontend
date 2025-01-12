@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <div className="">
       {/* Navbar */}
-      <div className="navbar bg-base-100">
+      <div className="navbar bg-base-100 border-b-2">
         <div className="navbar-start">
           {/* Menu button for smaller devices */}
           <button onClick={()=>setShowMobileNav(!showMobileNav)} className="btn btn-ghost btn-circle lg:hidden">

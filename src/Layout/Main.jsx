@@ -15,7 +15,6 @@ const Main = () => {
         <div className="">
           <div className="sticky top-9 hidden md:block">
             <div className="p-4">
-              <h2 className="text-xl font-bold mb-4">Menu</h2>
               <ul className="space-y-2">
                 <li>
                   <a
