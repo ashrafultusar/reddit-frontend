@@ -422,7 +422,7 @@ const Main = () => {
               </ul>
             </div>
           </div>
-          {showMobileNav && (
+          {/* {showMobileNav && (
             <div className="sticky top-10 left-0 md:hidden bg-white">
               <div className="p-4">
                 <h2 className="text-xl font-bold mb-4">Menu</h2>
@@ -462,7 +462,7 @@ const Main = () => {
                 </ul>
               </div>
             </div>
-          )}
+          )} */}
         </div>
         <div>
           <Outlet></Outlet>

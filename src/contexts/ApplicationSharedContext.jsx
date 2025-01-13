@@ -6,7 +6,7 @@ const ApplicationSharedContext = ({ children }) => {
   const [showMobileNav, setShowMobileNav]= useState(false)
   const context = {
    showMobileNav,
-   setShowMobileNav 
+   setShowMobileNav  
   };
   return (
     <ApplicationContext.Provider value={context}>
