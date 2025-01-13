@@ -10,28 +10,6 @@ const LogIn = () => {
             <form className="card-body">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">First Name</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="first name"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Last Name</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="last name"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
                   <span className="label-text">Email</span>
                 </label>
                 <input
@@ -48,17 +26,6 @@ const LogIn = () => {
                 <input
                   type="password"
                   placeholder="password"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Confirm Password</span>
-                </label>
-                <input
-                  type="password"
-                  placeholder="Confirm password"
                   className="input input-bordered"
                   required
                 />
