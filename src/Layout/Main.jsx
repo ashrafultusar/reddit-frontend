@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../Shared/Navbar";
 import { useContext } from "react";
 import { ApplicationContext } from "../contexts/ApplicationSharedContext";
+import MobileNav from "../Shared/MobileNav";
 
 const Main = () => {
   const { showMobileNav } = useContext(ApplicationContext);
