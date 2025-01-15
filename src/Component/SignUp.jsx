@@ -1,6 +1,10 @@
+
+
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
   const handleRegister = (e) => {
@@ -13,7 +17,7 @@ const SignUp = () => {
     const confirmPassword = form.confirmPassword.value;
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      toast.error("Passwords do not match!");
       return;
     }
     const name = `${firstName} ${lastName}`;
@@ -21,12 +25,23 @@ const SignUp = () => {
     const data = { name, email, password };
 
     axios
-      .post("http://localhost:8000/users", data)
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err));
+      .post("http://localhost:8000/signIn", data)
+      .then((res) => {
+        toast.success("Account created successfully!");
+        form.reset(); 
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 400) {
+          toast.error(err.response.data.error || "Email already in use!");
+        } else {
+          toast.error("An error occurred. Please try again later.");
+        }
+      });
   };
+
   return (
     <div className="">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="hero min-h-screen">
         <div className="hero-content flex-col ">
           <div className="card bg-base-100 w-full max-w-7xl shrink-0 shadow-2xl">
