@@ -35,7 +35,7 @@ const Navbar = () => {
               <img className="w-16 cursor-pointer" src={logo} alt="logo" />
 
               <span className="hidden lg:block text-red-500 font-bold text-3xl">
-                reddit
+                phreddit
               </span>
             </div>
           </Link>
@@ -44,20 +44,20 @@ const Navbar = () => {
           <input
             type="text"
             value=""
-            placeholder="Search Reddit"
+            placeholder="Search Phreddit…"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
         <div className="navbar-end flex items-center space-x-2">
-          <button className="btn btn-sm bg-gray-200 hover:bg-[#ff4500] text-gray-800 rounded-full px-4 hover:text-white">
-           Create Post
+          <button className="btn btn-sm bg-gray-200 hover:bg-[#ff4500] active:bg-[#ff4500] focus:bg-[#ff4500] text-gray-800 rounded-full px-4 hover:text-white">
+            Create Post
           </button>
           <Link to={"/login"}>
             <button className="btn btn-sm bg-red-500 text-white rounded-full px-4 hover:bg-red-600">
               Log In
             </button>
           </Link>
-         
         </div>
       </div>
     </div>
