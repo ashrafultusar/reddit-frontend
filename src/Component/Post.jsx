@@ -5,9 +5,9 @@ const Post = () => {
   const array = [1, 1, 1, 1, 1, 1];
 
   return (
-    <div className="space-y-6 ">
+    <div className="space-y-6 flex flex-col items-center">
       {array.map((item) => (
-        <div className="card bg-white w-96 shadow-lg rounded-lg overflow-hidden border border-gray-200">
+        <div className="card  bg-white max-w-2xl shadow-lg rounded-lg overflow-hidden border border-gray-200">
           <figure>
             <img
               src="https://i.ibb.co.com/xJKzTGV/ef-Re-IA6-MRd-O455-Tq-VICEUQ.jpg"
