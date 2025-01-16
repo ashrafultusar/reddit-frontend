@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import logo from "../assets/logo.png";
 import { ApplicationContext } from "../contexts/ApplicationSharedContext";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const { showMobileNav, setShowMobileNav } = useContext(ApplicationContext);
@@ -45,14 +45,19 @@ const Navbar = () => {
             type="text"
             value=""
             placeholder="Search Phreddit…"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-16 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div className="navbar-end flex items-center space-x-2">
-          <button className="btn btn-sm bg-gray-200 hover:bg-[#ff4500] active:bg-[#ff4500] focus:bg-[#ff4500] text-gray-800 rounded-full px-4 hover:text-white">
-            Create Post
-          </button>
+          <NavLink
+           
+            to={"/create-post"}
+          >
+            <button className="btn btn-sm bg-gray-200 hover:bg-[#ff4500] active:bg-[#ff4500] focus:bg-[#ff4500] text-gray-800 rounded-full px-4 hover:text-white">
+              Create Post
+            </button>
+          </NavLink>
           <Link to={"/login"}>
             <button className="btn btn-sm bg-red-500 text-white rounded-full px-4 hover:bg-red-600">
               Log In

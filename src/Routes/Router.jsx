@@ -4,6 +4,7 @@ import Home from "../Page/Home";
 import LogIn from "../Component/LogIn";
 import SignUp from "../Component/SignUp";
 import CreateCommunity from "../Component/CreateCommunity";
+import CreatePost from "../Component/CreatePost";
 
 
 export const router = createBrowserRouter([
@@ -27,8 +28,8 @@ export const router = createBrowserRouter([
         element: <CreateCommunity></CreateCommunity>,
       },
       {
-        path: "/contact",
-        element: <div>contact</div>,
+        path: "/create-post",
+        element: <CreatePost></CreatePost>,
       },
       {
         path: "/join",

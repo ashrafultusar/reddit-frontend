@@ -3,10 +3,8 @@ import Post from "../Component/Post";
 
 const Home = () => {
   return (
-    <div>
-      
-     <Post></Post>
-      
+    <div className="">
+      <Post />
     </div>
   );
 };
