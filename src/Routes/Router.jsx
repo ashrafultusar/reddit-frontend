@@ -3,6 +3,7 @@ import Main from "../Layout/Main";
 import Home from "../Page/Home";
 import LogIn from "../Component/LogIn";
 import SignUp from "../Component/SignUp";
+import CreateCommunity from "../Component/CreateCommunity";
 
 
 export const router = createBrowserRouter([
@@ -22,8 +23,8 @@ export const router = createBrowserRouter([
         element:<SignUp></SignUp>
       },
       {
-        path: "/popular",
-        element: <div>popular</div>,
+        path: "/create-community",
+        element: <CreateCommunity></CreateCommunity>,
       },
       {
         path: "/contact",

@@ -49,30 +49,15 @@ const Navbar = () => {
           />
         </div>
         <div className="navbar-end flex items-center space-x-2">
-          <button className="btn btn-sm bg-gray-200 text-gray-800 rounded-full px-4 hover:bg-gray-300">
-            Get App
+          <button className="btn btn-sm bg-gray-200 hover:bg-[#ff4500] text-gray-800 rounded-full px-4 hover:text-white">
+           Create Post
           </button>
           <Link to={"/login"}>
             <button className="btn btn-sm bg-red-500 text-white rounded-full px-4 hover:bg-red-600">
               Log In
             </button>
           </Link>
-          <button className="btn btn-ghost btn-circle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5 12h14M12 5l7 7-7 7"
-              />
-            </svg>
-          </button>
+         
         </div>
       </div>
     </div>
