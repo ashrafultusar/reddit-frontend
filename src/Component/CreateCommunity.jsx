@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 const CreateCommunity = () => {
   const handelSubmit = (e) => {
@@ -8,7 +9,12 @@ const CreateCommunity = () => {
     const username = form.username.value;
     const description = form.description.value;
 
-    console.log(communityName, username, description);
+    const data = { communityName, creator: username, description };
+    // console.log(data)
+    axios
+      .post("http://localhost:8000/api/communities", data)
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
   };
 
   return (
