@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const CreatePost = () => {
+  const [communities, setCommunities] = useState([]);
+  useEffect(() => {
+    axios("http://localhost:8000/api/communities")
+      .then((res) => setCommunities(res.data))
+      .catch((err) => console.error(err));
+  }, []);
+
   const handelCreatePost = (e) => {
     e.preventDefault();
     const from = e.target;
@@ -11,71 +19,84 @@ const CreatePost = () => {
     const username = from.username.value;
     const content = from.content.value;
 
-    console.log(
+    const postData = {
       communityName,
       title,
       existingLinkFlair,
       addLinkFlair,
-      username,
-      content
-    );
+      author:username,
+      content,
+    };
+    
+    axios.post("http://localhost:8000/api/posts", postData)
+    .then(res=> alert("post success"))
+    .catch(err => console.error(err))
   };
 
   return (
     <div>
-      <section class="max-w-4xl p-8 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
-        <h2 class="text-2xl font-semibold text-gray-700 capitalize dark:text-white text-center">
+      <section className="max-w-4xl p-8 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+        <h2 className="text-2xl font-semibold text-gray-700 capitalize dark:text-white text-center">
           Create New Post
         </h2>
 
         <form onSubmit={handelCreatePost}>
-          <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2">
             {/* <!-- Community Name --> */}
             <div>
               <label
-                class="text-gray-700 dark:text-gray-200"
-                for="communityName"
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor="communityName"
               >
-                Select community <span class="text-red-600">*</span>
+                Select community <span className="text-red-600">*</span>
               </label>
               <select
                 id="communityName"
                 name="communityName"
                 required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
               >
                 <option value="" disabled selected>
                   communities
                 </option>
-                <option value="community1">Am I the Jerk?</option>
-                <option value="community2">The History Channel</option>
+                {communities?.map((community, index) => (
+                  <option key={index} value={community?.communityName}>
+                    {community?.communityName}
+                  </option>
+                ))}
               </select>
             </div>
 
             {/* <!-- Title --> */}
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="title">
-                Title <span class="text-red-600">*</span>
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor="title"
+              >
+                Title <span className="text-red-600">*</span>
               </label>
               <input
                 id="title"
                 name="title"
                 type="text"
                 required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
             </div>
 
             {/* <!-- Existing Link Flairs --> */}
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="linkFlair">
-                Existing Link Flairs <span class="text-red-600">*</span>
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor="linkFlair"
+              >
+                Existing Link Flairs <span className="text-red-600">*</span>
               </label>
               <select
                 id="linkFlair"
                 name="existingLinkFlair"
                 required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
               >
                 <option value="" disabled selected>
                   Link flairs
@@ -90,8 +111,8 @@ const CreatePost = () => {
             {/* <!-- Add Link Flair --> */}
             <div>
               <label
-                class="text-gray-700 dark:text-gray-200"
-                for="addLinkFlair"
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor="addLinkFlair"
               >
                 Add Link Flair (Optional)
               </label>
@@ -99,44 +120,50 @@ const CreatePost = () => {
                 id="addLinkFlair"
                 name="addLinkFlair"
                 type="text"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
             </div>
 
             {/* <!-- Username --> */}
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="username">
-                Username <span class="text-red-600">*</span>
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor="username"
+              >
+                Username <span className="text-red-600">*</span>
               </label>
               <input
                 id="username"
                 name="username"
                 type="text"
                 required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
               />
             </div>
 
             {/* <!-- Post Content --> */}
-            <div class="col-span-2">
-              <label class="text-gray-700 dark:text-gray-200" for="content">
-                Post Content <span class="text-red-600">*</span>
+            <div className="col-span-2">
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor="content"
+              >
+                Post Content <span className="text-red-600">*</span>
               </label>
               <textarea
                 id="content"
                 name="content"
                 required
                 rows="6"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
               ></textarea>
             </div>
           </div>
 
           {/*  Submit Button  */}
-          <div class="flex justify-center mt-8">
+          <div className="flex justify-center mt-8">
             <button
               type="submit"
-              class="px-6 py-2.5 leading-5 text-white bg-[#FF4500] hover:bg-orange-700 rounded-md "
+              className="px-6 py-2.5 leading-5 text-white bg-[#FF4500] hover:bg-orange-700 rounded-md "
             >
               Submit Post
             </button>
