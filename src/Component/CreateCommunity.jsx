@@ -1,7 +1,11 @@
 import React from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CreateCommunity = () => {
+const navigate=useNavigate()
+
   const handelSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -13,7 +17,10 @@ const CreateCommunity = () => {
     // console.log(data)
     axios
       .post("http://localhost:8000/api/communities", data)
-      .then((res) => console.log(res))
+      .then((res) => {
+        toast.success("Community Create successfully")
+        
+      })
       .catch((err) => console.error(err));
   };
 

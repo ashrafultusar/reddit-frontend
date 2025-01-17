@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CreatePost = () => {
+  const navigate = useNavigate(); 
   const [communities, setCommunities] = useState([]);
   useEffect(() => {
     axios("http://localhost:8000/api/communities")
@@ -29,8 +32,12 @@ const CreatePost = () => {
     };
     
     axios.post("http://localhost:8000/api/posts", postData)
-    .then(res=> alert("post success"))
-    .catch(err => console.error(err))
+      .then(res => {
+        toast.success("Post add successfully")
+        navigate('/')
+    })
+      .catch(err => console.error(err))
+   
   };
 
   return (
