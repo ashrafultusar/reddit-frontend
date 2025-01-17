@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Post = () => {
   const description = `Does anyone else remember when they used to show actual historical content on the channel? 
     Does anyone else remember when they used to show actual historical content on the channel?`;
@@ -7,45 +9,32 @@ const Post = () => {
   return (
     <div className="space-y-6 flex flex-col items-center">
       {array.map((item) => (
-        <div className="card  bg-white max-w-2xl shadow-lg rounded-lg overflow-hidden border border-gray-200">
-          <figure>
-            <img
-              src="https://i.ibb.co.com/xJKzTGV/ef-Re-IA6-MRd-O455-Tq-VICEUQ.jpg"
-              alt="History Channel"
-              className="w-full h-48 object-cover"
-            />
-          </figure>
-          <div className="card-body p-5">
-            <div className=" flex justify-between ">
-              <div className="badge bg-base-300 px-3 py-1 text-xs rounded-full">
-                The History Channel
-              </div>
-              <div className="badge bg-base-300 px-3 py-1 text-xs rounded-full">
-                MarcoArelius
-              </div>
-            </div>
-            <hr />
-            <h2 className="text-xl font-semibold text-gray-800 leading-tight">
-              Remember when this was a HISTORY channel?
-            </h2>
-            <p>The walk among us</p>
-            <p className="text-sm text-gray-600 mt-2">
-              {description.split(" ").slice(0, 15).join(" ")}...
-            </p>
-            <div className="mt-4 flex items-center justify-between">
-              <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <span>👁️ 1,023 Views</span>
-                <div className="divider lg:divider-horizontal"></div>
+        <Link to={"/postD"}>
+        <div className="card bg-white max-w-2xl shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4">
+  <div className="card-header p-3 flex justify-between items-center">
+    <div className="text-sm text-gray-600">
+      <span className="font-medium">The History Channel</span> • 
+      <span className="ml-1">MarcoArelius</span> • 
+      <span className="ml-1 text-gray-500">1 year(s) ago</span>
+    </div>
+  </div>
+  <hr className="border-dotted border-gray-400" />
+  <div className="card-body p-5">
+    <h2 className="text-xl font-semibold text-gray-800 leading-tight">
+      Remember when this was a HISTORY channel?
+    </h2>
+    <p className="text-sm text-blue-500 mt-2">Link Flair (optional)</p>
+    <p className="text-sm text-gray-600 mt-2">
+      {description.split(" ").slice(0, 15).join(" ")}...
+    </p>
+    <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
+      <span>👁️ 1,023 Views</span>
+      <span>💬 4 Comments</span>
+    </div>
+  </div>
+</div>
 
-                <span>💬 4 Comments</span>
-              </div>
-
-              <div className="text-xs text-blue-500 font-medium">
-                1 year(s) ago
-              </div>
-            </div>
-          </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

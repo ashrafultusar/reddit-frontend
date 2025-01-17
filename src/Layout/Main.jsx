@@ -55,6 +55,9 @@ const Main = () => {
                 Create Community
               </NavLink>
             </li>
+            <li>
+         {/* rendering current communities here */}
+            </li>
           </ul>
         </div>
 
