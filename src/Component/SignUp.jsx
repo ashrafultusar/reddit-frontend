@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -16,19 +14,22 @@ const SignUp = () => {
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
 
+    // full name
+    const name = `${firstName} ${lastName}`;
+
+    // matching between two password field
     if (password !== confirmPassword) {
       toast.error("Passwords do not match!");
       return;
     }
-    const name = `${firstName} ${lastName}`;
 
     const data = { name, email, password };
 
     axios
-      .post("http://localhost:8000/signIn", data)
-      .then((res) => {
+      .post("http://localhost:8000/api/auth/register", data)
+      .then(() => {
         toast.success("Account created successfully!");
-        form.reset(); 
+        form.reset();
       })
       .catch((err) => {
         if (err.response && err.response.status === 400) {
