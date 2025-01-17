@@ -111,7 +111,10 @@ const LogIn = () => {
     const data = { email, password };
 
     try {
-      const response = await axios.post("http://localhost:8000/login", data);
+      const response = await axios.post(
+        "http://localhost:8000/api/auth/login",
+        data
+      );
       toast.success(response.data.message);
       navigate("/"); // Redirect to home
       form.reset(); // Clear the form
