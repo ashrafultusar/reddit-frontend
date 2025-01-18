@@ -40,7 +40,7 @@ const Post = ({ posts }) => {
   console.log(posts);
   return (
     <div className="space-y-6 flex flex-col items-center">
-      {posts.map((post) => (
+      {posts.slice().reverse().map((post) => (
         <Link to={"/postD"} key={post.id}>
           <div className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4">
             <div className="card-header p-3 flex justify-between items-center">

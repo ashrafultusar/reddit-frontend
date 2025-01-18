@@ -26,6 +26,7 @@
 // };
 
 // export default Home;
+
 import React from "react";
 import Post from "../Component/Post";
 import useFetchPosts from "../Hook/useFetchPosts";
@@ -34,9 +35,9 @@ const Home = () => {
   const posts = useFetchPosts();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 flex flex-col h-screen overflow-x-hidden">
       {/* Header Section with Post Count and Sorting */}
-      <div className="flex justify-between mb-10">
+      <div className="flex justify-between mb-10 sticky top-0 z-10">
         <p className="text-black text-2xl font-bold">
           All Posts: {posts?.length}
         </p>
@@ -46,11 +47,12 @@ const Home = () => {
           <p className="bg-[#dcdcdc] text-black px-3 py-1 rounded-md">Active</p>
         </div>
       </div>
-      
-      <hr className="bg-black h-[2px] mb-6" />
-      
+
+      {/* Remove the height from the hr */}
+      <hr className="bg-black mb-6" />
+
       {/* Post List Section with Scroll */}
-      <div className="max-h-[500px] overflow-y-auto">
+      <div className="flex-1 overflow-y-auto">
         <Post posts={posts} />
       </div>
     </div>
