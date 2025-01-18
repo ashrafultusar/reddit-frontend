@@ -3,6 +3,7 @@ import Navbar from "../Shared/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+
 const Main = () => {
   // Example: You can implement a dynamic dark mode toggle state here if needed
   const isDarkMode = true; // Replace with your state management logic
@@ -11,7 +12,7 @@ const Main = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/communities").then((response) => {
+    axios.get('http://localhost:8000/api/communities').then((response) => {
       setData(response.data);
     });
   }, []);
@@ -72,15 +73,7 @@ const Main = () => {
             {data.map((community) => (
               <li key={community._id}>
                 <NavLink
-                  // to={`/community/${community._id}`}
-                  // assuming the link is dynamic
-                  // className={({ isActive }) =>
-                  //   `block px-4 py-2 text-center rounded  ${
-                  //     isActive
-                  //       ? "bg-[#ff4500] text-white"
-                  //       : "bg-gray-300 dark:bg-gray-600 hover:bg-[#ff4500]"
-                  //   }`
-                  // }
+                 
                   className='flex items-center justify-center bg-gray-200 rounded-md'
                 >
                   {community?.communityName}

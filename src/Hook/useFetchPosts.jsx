@@ -5,7 +5,7 @@ const useFetchPosts = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/posts").then((response) => {
+    axios.get('http://localhost:8000/api/posts').then((response) => {
       setData(response.data);
     });
   }, []);

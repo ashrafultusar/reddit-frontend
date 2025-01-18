@@ -4,6 +4,9 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
+
+
 const SignUp = () => {
   const handleRegister = (e) => {
     e.preventDefault();
@@ -26,7 +29,7 @@ const SignUp = () => {
     const data = { name, email, password };
 
     axios
-      .post("http://localhost:8000/api/auth/register", data)
+      .post('http://localhost:8000/api/auth/register', data)
       .then(() => {
         toast.success("Account created successfully!");
         form.reset();

@@ -50,10 +50,7 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-end flex items-center space-x-2">
-          <NavLink
-           
-            to={"/create-post"}
-          >
+          <NavLink to={"/create-post"}>
             <button className="btn btn-sm bg-gray-200 hover:bg-[#ff4500] active:bg-[#ff4500] focus:bg-[#ff4500] text-gray-800 rounded-full px-4 hover:text-white">
               Create Post
             </button>
