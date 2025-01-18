@@ -6,6 +6,7 @@ import SignUp from "../Component/SignUp";
 import CreateCommunity from "../Component/CreateCommunity";
 import CreatePost from "../Component/CreatePost";
 import PostDetails from "../Component/PostDetails";
+import ViewCommunity from "../Component/ViewCommunity";
 
 
 export const router = createBrowserRouter([
@@ -35,7 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "/postD",
         element: <PostDetails></PostDetails>,
-      },
+      }, {
+        path: '/viewc',
+        element: <ViewCommunity></ViewCommunity>
+      }
     ],
   },
 ]);

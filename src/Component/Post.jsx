@@ -41,13 +41,13 @@ const ElapsedTime = ({ timestamp }) => {
 const Post = ({ posts }) => {
   return (
     <div className="space-y-6 flex flex-col items-center">
-      {posts.map((post) => (
+      {posts.slice().reverse().map((post) => (
         <div className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4">
           <div className="card-header p-3 flex justify-between items-center">
             <div className="text-sm text-gray-600">
               <span className="font-medium">
                 {post?.communityName || "Unknown Community"}
-              </span>{" "}
+              </span>
               •<span className="ml-1">{post?.userName || "Anonymous"}</span> •
               {post?.createdAt && <ElapsedTime timestamp={post.createdAt} />}
             </div>
