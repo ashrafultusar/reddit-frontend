@@ -68,9 +68,7 @@ const Main = () => {
                 Create Community
               </NavLink>
             </li>
-            <NavLink to="/viewc">
-              <li>ViewCommunity</li>
-            </NavLink>
+           
             {/* Rendering current communities using NavLink */}
             {data.map((community) => (
               <li key={community._id}>
