@@ -2,11 +2,11 @@ import { NavLink, Outlet } from "react-router-dom";
 import Navbar from "../Shared/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ViewCommunity from './../Component/ViewCommunity';
+import ViewCommunity from "./../Component/ViewCommunity";
 
 const Main = () => {
-  // Example: You can implement a dynamic dark mode toggle state here if needed
-  const isDarkMode = true; // Replace with your state management logic
+
+  const isDarkMode = true; 
 
   // community load
   const [data, setData] = useState([]);
@@ -68,14 +68,13 @@ const Main = () => {
                 Create Community
               </NavLink>
             </li>
-            <NavLink to="/viewc"><li>
-             ViewCommunity
-            </li>
-</NavLink>
+            <NavLink to="/viewc">
+              <li>ViewCommunity</li>
+            </NavLink>
             {/* Rendering current communities using NavLink */}
             {data.map((community) => (
               <li key={community._id}>
-                <NavLink className="flex items-center justify-center bg-gray-200 rounded-md">
+                <NavLink to={`/community/${community.communityName}`} className="flex items-center justify-center bg-gray-200 rounded-md">
                   {community?.communityName}
                 </NavLink>
               </li>
