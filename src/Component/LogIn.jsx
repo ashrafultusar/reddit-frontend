@@ -27,9 +27,9 @@ const LogIn = () => {
         data
       );
       toast.success(response.data.message);
-toast.success('login success')
-      navigate("/"); 
-      form.reset(); 
+      toast.success("login success");
+      navigate("/");
+      form.reset();
     } catch (err) {
       if (err.response && err.response.status === 400) {
         toast.error(err.response.data.message || "Invalid login credentials!");

@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../Provider/AuthProvider";
 
 
 
 
 const SignUp = () => {
+const{createUser}=useContext(AuthContext)
+
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -41,6 +44,8 @@ const SignUp = () => {
           toast.error("An error occurred. Please try again later.");
         }
       });
+
+    
   };
 
   return (
