@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -25,12 +23,13 @@ const LogIn = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/auth/login',
+        "http://localhost:8000/api/auth/login",
         data
       );
       toast.success(response.data.message);
-      navigate("/"); // Redirect to home
-      form.reset(); // Clear the form
+toast.success('login success')
+      navigate("/"); 
+      form.reset(); 
     } catch (err) {
       if (err.response && err.response.status === 400) {
         toast.error(err.response.data.message || "Invalid login credentials!");
@@ -41,11 +40,13 @@ const LogIn = () => {
   };
 
   return (
-    <div>
+    <div className="">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="hero min-h-screen">
         <div className="hero-content flex-col">
           <div className="card bg-base-100 w-full max-w-7xl shrink-0 shadow-2xl">
             <form className="card-body" onSubmit={handleLogin}>
+              <h1 className="text-2xl font-bold text-center">LOGIN FORM</h1>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -70,12 +71,27 @@ const LogIn = () => {
                   required
                 />
               </div>
+              <div className="form-control">
+                <label className="label cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary"
+                    required
+                  />
+                  <span className="label-text ml-2">
+                    I agree to the{" "}
+                    <Link className="text-blue-500 underline" to="#">
+                      Terms and Conditions
+                    </Link>
+                  </span>
+                </label>
+              </div>
               <div className="form-control mt-6">
                 <button type="submit" className="btn btn-primary">
                   Login
                 </button>
               </div>
-              <p>
+              <p className="text-center">
                 New to Reddit?{" "}
                 <Link className="text-red-500" to={"/signup"}>
                   Sign-up
@@ -85,7 +101,6 @@ const LogIn = () => {
           </div>
         </div>
       </div>
-      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

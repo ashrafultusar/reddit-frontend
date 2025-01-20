@@ -36,7 +36,7 @@ const SignUp = () => {
       })
       .catch((err) => {
         if (err.response && err.response.status === 400) {
-          toast.error(err.response.data.error || "Email already in use!");
+          toast.error("Email already in use!");
         } else {
           toast.error("An error occurred. Please try again later.");
         }
@@ -44,86 +44,85 @@ const SignUp = () => {
   };
 
   return (
-    <div className="">
-      <ToastContainer position="top-right" autoClose={3000} />
-      <div className="hero min-h-screen">
-        <div className="hero-content flex-col ">
-          <div className="card bg-base-100 w-full max-w-7xl shrink-0 shadow-2xl">
-            <form onSubmit={handleRegister} className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">First Name</span>
-                </label>
-                <input
-                  type="text"
-                  name="firstName"
-                  placeholder="first name"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Last Name</span>
-                </label>
-                <input
-                  type="text"
-                  name="lastName"
-                  placeholder="last name"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="email"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="password"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Confirm Password</span>
-                </label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Confirm password"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control mt-6">
-                <button className="btn btn-primary">Sign Up</button>
-              </div>
-              <p>
-                Already a redditor?{" "}
-                <Link className="text-red-500" to={"/login"}>
-                  Log In
-                </Link>
-              </p>
-            </form>
-          </div>
+    <div className=" flex items-center justify-center">
+    <ToastContainer position="top-right" autoClose={3000} />
+    <div className="bg-white shadow-md rounded-lg w-full max-w-md p-8">
+      <h2 className="text-2xl font-bold text-center text-blue-600 mb-4">REGISTER FORM</h2>
+      <form onSubmit={handleRegister}>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
         </div>
-      </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Your Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <p className="text-sm text-yellow-500 mt-1">Wrong Password</p>
+        </div>
+        <div className="flex items-center mb-4">
+          <input
+            type="checkbox"
+            id="terms"
+            className="mr-2 focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <label htmlFor="terms" className="text-sm text-gray-700">
+            I agree to the <span className="text-blue-500 cursor-pointer">Terms and Conditions</span>
+          </label>
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          Register
+        </button>
+      </form>
+      <p className="text-sm text-center mt-4">
+        Already have an account? <Link to="/login" className="text-blue-500">Log In</Link>
+      </p>
     </div>
+  </div>
   );
 };
 
