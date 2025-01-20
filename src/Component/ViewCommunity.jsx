@@ -89,7 +89,7 @@ const ViewCommunity = () => {
         <div className="flex justify-center items-center min-h-[200px]"><p className="text-red-500 text-xl font-semibold">No Post Available</p></div>  
         ) : (
           <div className="space-y-6 flex flex-col items-center mt-6">
-          {community.posts.map((post) => (
+          {community.posts.slice().reverse().map((post) => (
             <div
               key={post.id}
               className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200"
@@ -120,8 +120,8 @@ const ViewCommunity = () => {
                   <span>👁️ {post.views}</span>
                   <span>💬 {post.commentsCount}</span>
                   <span className="text-blue-400 font-medium">
-                    <Link to={`/postd`}>View More</Link>
-                  </span>
+                  <Link to={`/postD/${post._id}`}>View More</Link>
+                </span>
                 </div>
               </div>
             </div>
