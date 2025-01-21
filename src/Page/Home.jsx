@@ -1,14 +1,39 @@
-
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Post from "../Component/Post";
-import useFetchPosts from "../Hook/useFetchPosts";
+import axios from "axios";
 
 const Home = () => {
-  const posts = useFetchPosts();
+  const [posts, setData] = useState([]); // Store fetched posts
+  const [sortOrder, setSortOrder] = useState("newest"); // Track sort order
 
-// console.log(posts);
-  
+  useEffect(() => {
+    // Fetch posts from API
+    axios.get("http://localhost:8000/api/posts").then((response) => {
+      const fetchedPosts = response.data;
+
+      // Sort posts based on sortOrder
+      const sortedData = sortPostsByCreatedAt(fetchedPosts, sortOrder);
+      setData(sortedData);
+    });
+  }, [sortOrder]); // Re-run effect when sortOrder changes
+
+  // Sorting function
+  const sortPostsByCreatedAt = (posts, order) => {
+    return posts.sort((a, b) => {
+      if (order === "newest") {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      } else if (order === "oldest") {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
+      return 0;
+    });
+  };
+
+  // Handle sort order click
+  const handleSortClick = (order) => {
+    setSortOrder(order);
+  };
+
   return (
     <div className="space-y-6 flex flex-col h-screen overflow-x-hidden">
       {/* Header Section with Post Count and Sorting */}
@@ -17,16 +42,29 @@ const Home = () => {
           All Posts: {posts?.length}
         </p>
         <div className="flex items-center justify-center gap-4">
-          <p className="bg-[#dcdcdc] text-black px-3 py-1 rounded-md">Newest</p>
-          <p className="bg-[#dcdcdc] text-black px-3 py-1 rounded-md">Oldest</p>
-          <p className="bg-[#dcdcdc] text-black px-3 py-1 rounded-md">Active</p>
+          <p
+            className={`px-3 py-1 rounded-md cursor-pointer ${
+              sortOrder === "newest" ? "bg-blue-500 text-white" : "bg-[#dcdcdc] text-black"
+            }`}
+            onClick={() => handleSortClick("newest")}
+          >
+            Newest
+          </p>
+          <p
+            className={`px-3 py-1 rounded-md cursor-pointer ${
+              sortOrder === "oldest" ? "bg-blue-500 text-white" : "bg-[#dcdcdc] text-black"
+            }`}
+            onClick={() => handleSortClick("oldest")}
+          >
+            Oldest
+          </p>
         </div>
       </div>
 
-      {/* Remove the height from the hr */}
+      {/* Divider */}
       <hr className="bg-black mb-6" />
 
-      {/* Post List Section with Scroll */}
+      {/* Post List Section */}
       <div className="flex-1 overflow-y-auto">
         <Post posts={posts} />
       </div>
