@@ -2,6 +2,7 @@ import { useContext } from "react";
 import logo from "../assets/logo.png";
 import { ApplicationContext } from "../contexts/ApplicationSharedContext";
 import { Link, NavLink } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
   const { showMobileNav, setShowMobileNav } = useContext(ApplicationContext);
@@ -50,6 +51,25 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-end flex items-center space-x-2">
+          <div className="flex gap-1">
+            <Link to={'/user-profile'}>
+              {" "}
+              <img
+                className="w-10 rounded-full"
+                alt="Tailwind CSS Navbar component"
+                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              />
+            </Link>
+            <Link to={'/admin-profile'}>
+              {" "}
+              <img
+                className="w-10 rounded-full"
+                alt="Tailwind CSS Navbar component"
+                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              />{" "}
+            </Link>
+          </div>
+
           <NavLink to={"/create-post"}>
             <button className="btn btn-sm bg-gray-200 hover:bg-[#ff4500] active:bg-[#ff4500] focus:bg-[#ff4500] text-gray-800 rounded-full px-4 hover:text-white">
               Create Post
