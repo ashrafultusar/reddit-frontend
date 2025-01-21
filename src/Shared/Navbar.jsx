@@ -1,8 +1,16 @@
+import { useContext } from "react";
 import logo from "../assets/logo.png";
 import { Link, NavLink } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Navbar = () => {
+  const { logOut, user } = useContext(AuthContext);
+  const logOutHandler = () => {
+    logOut()
+      .then(() => toast.success("Logout Success"))
+      .catch((err) => toast.error(`${err.message}`));
+  };
   return (
     <div className="">
       {/* Navbar */}
@@ -28,35 +36,37 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-end flex items-center space-x-2">
-          <div className="flex gap-1">
-            <Link to={'/user-profile'}>
-              {" "}
-              <img
-                className="w-10 rounded-full"
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
-            </Link>
-            <Link to={'/admin-profile'}>
-              {" "}
-              <img
-                className="w-10 rounded-full"
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />{" "}
-            </Link>
-          </div>
-
+          {user && (
+            <div className="flex gap-1">
+              <Link to={"/user-profile"}>
+                {" "}
+                <img
+                  className="w-10 rounded-full"
+                  alt="Tailwind CSS Navbar component"
+                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                />
+              </Link>
+            </div>
+          )}
           <NavLink to={"/create-post"}>
             <button className="btn btn-sm bg-gray-200 hover:bg-[#ff4500] active:bg-[#ff4500] focus:bg-[#ff4500] text-gray-800 rounded-full px-4 hover:text-white">
               Create Post
             </button>
           </NavLink>
-          <Link to={"/login"}>
-            <button className="btn btn-sm bg-red-500 text-white rounded-full px-4 hover:bg-red-600">
-              Log In
+          {user ? (
+            <button
+              onClick={logOutHandler}
+              className="btn btn-sm bg-red-500 text-white rounded-full px-4 hover:bg-red-600"
+            >
+              Logout
             </button>
-          </Link>
+          ) : (
+            <Link to={"/login"}>
+              <button className="btn btn-sm bg-red-500 text-white rounded-full px-4 hover:bg-red-600">
+                Log In
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </div>
