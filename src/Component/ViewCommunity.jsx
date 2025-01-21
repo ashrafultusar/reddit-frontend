@@ -24,6 +24,7 @@ const ViewCommunity = () => {
   const { communityName } = useParams();
   const [community, setCommunity] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [sortOrder, setSortOrder] = useState("Newest"); // State for sorting order
 
   useEffect(() => {
     axios
@@ -38,7 +39,6 @@ const ViewCommunity = () => {
       });
   }, [communityName]);
 
-  // Update elapsed time every second for dynamic countdown
   useEffect(() => {
     const interval = setInterval(() => {
       setElapsedTime((prevTime) => prevTime + 1);
@@ -49,6 +49,16 @@ const ViewCommunity = () => {
 
   if (!community) return <p>Loading...</p>;
 
+  // Sorting logic based on sortOrder
+  const sortedPosts =
+    community?.posts?.slice().sort((a, b) => {
+      if (sortOrder === "Newest") {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      } else {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
+    }) || [];
+
   return (
     <div>
       {/* Community details */}
@@ -56,15 +66,22 @@ const ViewCommunity = () => {
         <div className="flex justify-between">
           <h1 className="text-2xl font-medium">{community?.communityName}</h1>
           <div className="flex items-center justify-center gap-4">
-            <p className="bg-[#dcdcdc] text-black px-3 py-1 rounded-md">
+            <button
+              onClick={() => setSortOrder("Newest")}
+              className={`bg-[#dcdcdc] text-black px-3 py-1 rounded-md ${
+                sortOrder === "Newest" ? "font-bold" : ""
+              }`}
+            >
               Newest
-            </p>
-            <p className="bg-[#dcdcdc] text-black px-3 py-1 rounded-md">
+            </button>
+            <button
+              onClick={() => setSortOrder("Oldest")}
+              className={`bg-[#dcdcdc] text-black px-3 py-1 rounded-md ${
+                sortOrder === "Oldest" ? "font-bold" : ""
+              }`}
+            >
               Oldest
-            </p>
-            <p className="bg-[#dcdcdc] text-black px-3 py-1 rounded-md">
-              Active
-            </p>
+            </button>
           </div>
         </div>
         <div className="mt-4 space-y-1 mb-2">
@@ -80,7 +97,7 @@ const ViewCommunity = () => {
       <hr className="bg-black h-1" />
 
       {/* All posts */}
-      {community?.posts?.length === 0 ? (
+      {sortedPosts.length === 0 ? (
         <div className="flex justify-center items-center min-h-[200px]">
           <p className="text-red-500 text-xl font-semibold">
             No Post Available
@@ -88,48 +105,45 @@ const ViewCommunity = () => {
         </div>
       ) : (
         <div className="space-y-6 flex flex-col items-center mt-6">
-          {community?.posts
-            ?.slice()
-            .reverse()
-            .map((post, index) => (
-              <div
-                key={index}
-                className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200"
-              >
-                <div className="card-header p-3 flex justify-between items-center">
-                  <div className="text-sm text-gray-600">
-                    <span className="font-medium mr-2">{post.author}</span>
-                    <span>
-                      {formatElapsedTime(calculateElapsedTime(post.createdAt))}
-                    </span>
-                  </div>
-                </div>
-                <hr className="border-dotted border-gray-400" />
-                <div className="card-body p-5">
-                  <h2 className="text-xl font-semibold text-gray-800 leading-tight">
-                    {post.title}
-                  </h2>
-                  <p className="text-sm text-blue-500 mt-2">{post.category}</p>
-                  <p className="text-sm text-gray-600 mt-2">{post.content}</p>
-                  <div className="mt-4 flex items-center justify-around text-sm text-gray-500">
-                    <span className="flex items-center justify-center gap-1 border p-1 rounded-full">
-                      <button>
-                        <BiUpvote className="text-xl" />
-                      </button>
-                      <p>{post.upvotes}</p>
-                      <button>
-                        <BiDownvote className="text-xl" />
-                      </button>
-                    </span>
-                    <span>👁️ {post.views}</span>
-                    <span>💬 {post.commentsCount}</span>
-                    <span className="text-blue-400 font-medium">
-                      <Link to={`/postD/${post._id}`}>View More</Link>
-                    </span>
-                  </div>
+          {sortedPosts.map((post, index) => (
+            <div
+              key={index}
+              className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200"
+            >
+              <div className="card-header p-3 flex justify-between items-center">
+                <div className="text-sm text-gray-600">
+                  <span className="font-medium mr-2">{post.author}</span>
+                  <span>
+                    {formatElapsedTime(calculateElapsedTime(post.createdAt))}
+                  </span>
                 </div>
               </div>
-            ))}
+              <hr className="border-dotted border-gray-400" />
+              <div className="card-body p-5">
+                <h2 className="text-xl font-semibold text-gray-800 leading-tight">
+                  {post.title}
+                </h2>
+                <p className="text-sm text-blue-500 mt-2">{post.category}</p>
+                <p className="text-sm text-gray-600 mt-2">{post.content}</p>
+                <div className="mt-4 flex items-center justify-around text-sm text-gray-500">
+                  <span className="flex items-center justify-center gap-1 border p-1 rounded-full">
+                    <button>
+                      <BiUpvote className="text-xl" />
+                    </button>
+                    <p>{post.upvotes}</p>
+                    <button>
+                      <BiDownvote className="text-xl" />
+                    </button>
+                  </span>
+                  <span>👁️ {post.views}</span>
+                  <span>💬 {post.commentsCount}</span>
+                  <span className="text-blue-400 font-medium">
+                    <Link to={`/postD/${post._id}`}>View More</Link>
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

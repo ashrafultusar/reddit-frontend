@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const { createUser } = useContext(AuthContext);
 
   const handleRegister = (e) => {
@@ -43,6 +44,7 @@ const SignUp = () => {
               toast.error("An error occurred. Please try again later.");
             }
           });
+        navigate("/");
       })
       .catch((err) => toast.error(`Something Went wrong ${err.message}`));
 
