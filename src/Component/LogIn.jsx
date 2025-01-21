@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const LogIn = () => {
+  const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -42,9 +44,9 @@ const LogIn = () => {
   return (
     <div className="">
       <ToastContainer position="top-right" autoClose={3000} />
-      <div className="hero min-h-screen">
+      <div className="hero ">
         <div className="hero-content flex-col">
-          <div className="card bg-base-100 w-full max-w-7xl shrink-0 shadow-2xl">
+          <div className="card bg-base-100 w-full max-w-7xl shrink-0 shadow-md">
             <form className="card-body" onSubmit={handleLogin}>
               <h1 className="text-2xl font-bold text-center">LOGIN FORM</h1>
               <div className="form-control">
@@ -93,7 +95,7 @@ const LogIn = () => {
               </div>
               <p className="text-center">
                 New to Reddit?{" "}
-                <Link className="text-red-500" to={"/signup"}>
+                <Link className="text-blue-500" to={"/signup"}>
                   Sign-up
                 </Link>
               </p>
