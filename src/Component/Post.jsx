@@ -48,11 +48,11 @@ const Post = ({ posts }) => {
           <div className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4">
             <div className="card-header p-3 flex justify-between items-center">
               <div className="text-sm text-gray-600">
-                <span className="font-medium">
+                <span className="font-medium bg-blue-100 px-2 rounded-full">
                   {post?.communityName || "Unknown Community"}
                 </span>
-                •<span className="ml-1">{post?.userName || "Anonymous"}</span> •
-                {post?.createdAt && <ElapsedTime timestamp={post.createdAt} />}
+                <span className= " mx-3 bg-green-100 px-2 rounded-full">{post?.userName || "Anonymous"}</span > 
+                <span className="bg-lime-200 px-2 rounded-full">{post?.createdAt && <ElapsedTime timestamp={post.createdAt} />}</span>
               </div>
             </div>
             <hr className="border-dotted border-gray-400" />
