@@ -36,22 +36,17 @@ const ElapsedTime = ({ timestamp }) => {
   );
 };
 
-
-
-
-
-
 const PostDetails = () => {
-  
-
-  const { postId } = useParams(); 
+  const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPostDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/posts/${postId}`);
+        const response = await fetch(
+          `http://localhost:8000/api/posts/${postId}`
+        );
         if (!response.ok) throw new Error("Failed to fetch post details");
 
         const postData = await response.json();
@@ -83,16 +78,25 @@ const PostDetails = () => {
           <div className="p-6">
             {/* Community Name and Timestamp */}
             <div className="text-sm text-gray-500">
-              <span className="font-semibold text-[16px]">{ post?.communityName}</span> | <span><span>{post?.createdAt && <ElapsedTime timestamp={post.createdAt} />}</span>
-</span>
+              <span className="font-semibold text-[16px] bg-blue-100 px-2 rounded-full mr-2">
+                {post?.communityName}
+              </span>{" "}
+              |{" "}
+              <span>
+                <span className="bg-lime-200 px-2 rounded-full ml-1">
+                  {post?.createdAt && (
+                    <ElapsedTime timestamp={post.createdAt} />
+                  )}
+                </span>
+              </span>
             </div>
             {/* Username */}
-            <div className="text-sm text-gray-500 mt-1">
-              Posted by:   <span className="font-medium">{ post?.author}</span>
+            <div className="text-sm text-gray-500 mt-4">
+              <span className="font-medium bg-blue-100 px-2 rounded-full ">Posted by:  {post?.author}</span>
             </div>
             {/* Post Title */}
             <h1 className="text-2xl font-bold text-gray-800 mt-4">
-              { post?.title}
+              {post?.title}
             </h1>
             {/* Link Flair */}
             <div className="mt-2">
@@ -101,9 +105,7 @@ const PostDetails = () => {
               </span>
             </div>
             {/* Post Content */}
-            <p className="text-gray-700 mt-4">
-              {post?.content}
-            </p>
+            <p className="text-gray-700 mt-4">{post?.content}</p>
             {/* View and Comment Count */}
             <div className="flex items-center justify-between text-sm text-gray-500 mt-4">
               <div className="flex space-x-4">
@@ -136,4 +138,3 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
-

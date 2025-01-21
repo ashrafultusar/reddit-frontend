@@ -64,9 +64,13 @@ const Post = ({ posts }) => {
                 {post?.flair || "No Flair"}
               </p>
               <p className="text-sm text-gray-600 mt-2">
-                {post?.content?.split(" ").slice(0, 15).join(" ") ||
-                  "No content available"}
-                ...
+                {/* Post Content */}
+<p className="text-gray-700 mt-4">
+  {post?.content?.length > 80
+    ? `${post.content.substring(0, 80)}...`
+    : post?.content || "No content available"}
+</p>
+
               </p>
               <div className="mt-4 flex items-center justify-around text-sm text-gray-500">
                 <span className="flex items-center justify-center gap-1 border p-1 rounded-full">
