@@ -24,6 +24,7 @@ const AuthProvider = ({ children }) => {
 
   // login user
   const signIn = (email, password) => {
+    setLoading(true)
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -37,6 +38,7 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("current user", currentUser);
       setUser(currentUser);
+      setLoading(false)
     });
     return () => {
       unSubscribe();
