@@ -7,7 +7,7 @@ import useFetchPosts from "../Hook/useFetchPosts";
 const Home = () => {
   const posts = useFetchPosts();
 
-console.log(posts);
+// console.log(posts);
   
   return (
     <div className="space-y-6 flex flex-col h-screen overflow-x-hidden">

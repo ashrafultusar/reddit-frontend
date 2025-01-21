@@ -9,7 +9,7 @@ const LogIn = () => {
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -22,23 +22,28 @@ const LogIn = () => {
     }
 
     const data = { email, password };
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/auth/login",
-        data
-      );
-      toast.success(response.data.message);
-      toast.success("login success");
-      navigate("/");
-      form.reset();
-    } catch (err) {
-      if (err.response && err.response.status === 400) {
-        toast.error(err.response.data.message || "Invalid login credentials!");
-      } else {
-        toast.error("An error occurred. Please try again later.");
-      }
-    }
+    axios
+      .post("http://localhost:8000/api/auth/login", data)
+      .then(() => {
+        toast.success("login success");
+        signIn(email, password)
+          .then(() => {
+            navigate("/");
+          })
+          .catch((err) => {
+            console.error(err);
+            toast.error("An error occurred. Please try again later.");
+          });
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 400) {
+          toast.error(
+            err.response.data.message || "Invalid login credentials!"
+          );
+        } else {
+          toast.error("An error occurred. Please try again later.");
+        }
+      });
   };
 
   return (

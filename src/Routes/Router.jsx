@@ -7,7 +7,8 @@ import CreateCommunity from "../Component/CreateCommunity";
 import CreatePost from "../Component/CreatePost";
 import PostDetails from "../Component/PostDetails";
 import ViewCommunity from "../Component/ViewCommunity";
-
+import UserProfile from "../Page/UserProfile";
+import AdminProfile from "../Page/AdminProfile";
 
 export const router = createBrowserRouter([
   {
@@ -17,13 +18,14 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-      }, {
-        path: '/login',
-        element:<LogIn></LogIn>
       },
-       {
-        path: '/signup',
-        element:<SignUp></SignUp>
+      {
+        path: "/login",
+        element: <LogIn></LogIn>,
+      },
+      {
+        path: "/signup",
+        element: <SignUp></SignUp>,
       },
       {
         path: "/create-community",
@@ -36,10 +38,19 @@ export const router = createBrowserRouter([
       {
         path: "/postD/:postId",
         element: <PostDetails></PostDetails>,
-      }, {
-        path: 'community/:communityName',
-        element: <ViewCommunity></ViewCommunity>
-      }
+      },
+      {
+        path: "community/:communityName",
+        element: <ViewCommunity></ViewCommunity>,
+      },
+      {
+        path: "/user-profile",
+        element: <UserProfile></UserProfile>,
+      },
+      {
+        path: "/admin-profile",
+        element: <AdminProfile></AdminProfile>,
+      },
     ],
   },
 ]);
