@@ -112,8 +112,8 @@ const ViewCommunity = () => {
             >
               <div className="card-header p-3 flex justify-between items-center">
                 <div className="text-sm text-gray-600">
-                  <span className="font-medium mr-2">{post.author}</span>
-                  <span>
+                  <span className="font-medium bg-blue-100 px-2 rounded-full mr-2">{post.author}</span>
+                  <span className="bg-green-100 px-2 rounded-full">
                     {formatElapsedTime(calculateElapsedTime(post.createdAt))}
                   </span>
                 </div>
