@@ -29,7 +29,6 @@ const CommentPage = () => {
         console.error("Error fetching communities:", error);
       });
 
-
   };
 
   return (
