@@ -12,7 +12,7 @@
 //   const [data, setData] = useState([]);
 
 //   useEffect(() => {
-//     axios.get("http://localhost:8000/api/communities").then((response) => {
+//     axios.get("https://backend-ten-indol-40.vercel.app/api/communities").then((response) => {
 //       setData(response.data);
 //     });
 //   }, []);
@@ -105,7 +105,7 @@ const Main = () => {
   // Fetch communities when the component mounts
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/communities")
+      .get("https://backend-ten-indol-40.vercel.app/api/communities")
       .then((response) => {
         setData(response.data); // Update state with community data
       })

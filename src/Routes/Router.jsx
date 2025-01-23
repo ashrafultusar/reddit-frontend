@@ -9,6 +9,7 @@ import PostDetails from "../Component/PostDetails";
 import ViewCommunity from "../Component/ViewCommunity";
 import UserProfile from "../Page/UserProfile";
 import AdminProfile from "../Page/AdminProfile";
+import CommentPage from "../Component/CommentPage";
 
 export const router = createBrowserRouter([
   {
@@ -50,7 +51,10 @@ export const router = createBrowserRouter([
       {
         path: "/admin-profile",
         element: <AdminProfile></AdminProfile>,
-      },
+      }, {
+        path: '/comment-page',
+        element:<CommentPage></CommentPage>
+      }
     ],
   },
 ]);

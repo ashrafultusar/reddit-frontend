@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { BiUpvote } from "react-icons/bi";
-import { BiDownvote } from "react-icons/bi";
+import SinglePost from "./SinglePost";
 
 const calculateElapsedTime = (timestamp) => {
   const now = new Date();
@@ -20,7 +18,7 @@ const formatElapsedTime = (seconds) => {
   return `${days} day${days !== 1 ? "s" : ""} ago`;
 };
 
-const ElapsedTime = ({ timestamp }) => {
+export const ElapsedTime = ({ timestamp }) => {
   const [elapsedTime, setElapsedTime] = useState(
     calculateElapsedTime(timestamp)
   );
@@ -42,58 +40,7 @@ const Post = ({ posts }) => {
   return (
     <div className="space-y-6 flex flex-col items-center">
       {posts?.map((post, index) => (
-        <div
-          key={index}
-          className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4"
-        >
-          <div className="card-header p-3 flex justify-between items-center">
-            <div className="text-sm text-gray-600">
-              <span className="font-medium bg-blue-100 px-2 rounded-full">
-                {post?.communityName || "Unknown Community"}
-              </span>
-              <span className=" mx-3 bg-green-100 px-2 rounded-full">
-                {post?.userName || "Anonymous"}
-              </span>
-              <span className="bg-lime-200 px-2 rounded-full">
-                {post?.createdAt && <ElapsedTime timestamp={post.createdAt} />}
-              </span>
-            </div>
-          </div>
-          <hr className="border-dotted border-gray-400" />
-          <div className="card-body p-5">
-            <h2 className="text-xl font-semibold text-gray-800 leading-tight">
-              {post?.title || "Untitled Post"}
-            </h2>
-            <p className="text-sm text-blue-500 mt-2">
-              {post?.flair || "No Flair"}
-            </p>
-            <p className="text-sm text-gray-600 mt-2">
-              {/* Post Content */}
-              <p className="text-gray-700 mt-4">
-                {post?.content?.length > 80
-                  ? `${post.content.substring(0, 80)}...`
-                  : post?.content || "No content available"}
-              </p>
-            </p>
-            <div className="mt-4 flex items-center justify-around text-sm text-gray-500">
-              <span className="flex items-center justify-center gap-1 border p-1 rounded-full">
-                <button>
-                  <BiUpvote className="text-xl" />
-                </button>
-                <p>2</p>
-                <button>
-                  <BiDownvote className="text-xl" />
-                </button>
-              </span>
-              <span>👁️ {post?.views || 0} Views</span>
-              <span>💬 {post?.comments?.length || 0} Comments</span>
-              <span className="text-blue-400 font-medium">
-                <Link to={`/postD/${post._id}`}>View More</Link>
-              </span>
-            </div>
-          </div>
-          <div></div>
-        </div>
+        <SinglePost key={index} post={post} />
       ))}
     </div>
   );

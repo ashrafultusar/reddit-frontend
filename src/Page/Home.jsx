@@ -8,7 +8,7 @@ const Home = () => {
 
   useEffect(() => {
     // Fetch posts from API
-    axios.get("http://localhost:8000/api/posts").then((response) => {
+    axios.get("https://backend-ten-indol-40.vercel.app/api/posts").then((response) => {
       const fetchedPosts = response.data;
 
       // Sort posts based on sortOrder
