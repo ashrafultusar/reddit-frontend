@@ -29,7 +29,7 @@ const SinglePost = ({ post }) => {
       .then((res) => setComments(res?.data))
       .catch((err) => console.error(err));
   });
-console.log(comments);
+// console.log(comments);
 
   return (
     <div className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4">

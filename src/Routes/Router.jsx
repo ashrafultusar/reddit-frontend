@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
         path: "/admin-profile",
         element: <AdminProfile></AdminProfile>,
       }, {
-        path: '/comment-page',
+        path: '/comment-page/:id',
         element:<CommentPage></CommentPage>
       }
     ],

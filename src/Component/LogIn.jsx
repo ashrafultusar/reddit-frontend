@@ -23,7 +23,7 @@ const LogIn = () => {
 
     const data = { email, password };
     axios
-      .post("https://backend-ten-indol-40.vercel.app/api/auth/login", data)
+      .post("http://localhost:8000/api/auth/login", data)
       .then(() => {
         toast.success("login success");
         signIn(email, password)

@@ -7,7 +7,7 @@ const CreatePost = () => {
   const navigate = useNavigate(); 
   const [communities, setCommunities] = useState([]);
   useEffect(() => {
-    axios("https://backend-ten-indol-40.vercel.app/api/communities")
+    axios("http://localhost:8000/api/communities")
       .then((res) => setCommunities(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -31,7 +31,7 @@ const CreatePost = () => {
       content,
     };
     
-    axios.post("https://backend-ten-indol-40.vercel.app/api/posts", postData)
+    axios.post("http://localhost:8000/api/posts", postData)
       .then(res => {
         toast.success("Post add successfully")
         navigate('/')
