@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
@@ -58,7 +59,15 @@ const PostDetails = () => {
     };
 
     fetchPostDetails();
+    viewCount();
   }, [postId]);
+
+  const viewCount = () => {
+    axios
+      .patch("http://localhost:8000/api/posts/views", { postId })
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
+  };
 
   if (error) return <div>Error: {error}</div>; // Display error message if there's an issue
   if (!post) return <div>Loading...</div>; // Show loading state if post data is not available yet
@@ -108,7 +117,7 @@ const PostDetails = () => {
                 <span>💬 4 Comments</span>
               </div>
               <div>
-                <Link to={`/comment-page/${postId}`}className="btn">
+                <Link to={`/comment-page/${postId}`} className="btn">
                   Add Comment
                 </Link>
               </div>
@@ -119,7 +128,7 @@ const PostDetails = () => {
       </div>
 
       {/* comment show here */}
-      <div  className="max-w-2xl">
+      <div className="max-w-2xl">
         <div className="bg-white p-4 rounded-lg ">
           <div className="flex items-center mb-2">
             <p className="text-lg font-semibold text-gray-700 mr-2">
@@ -129,7 +138,7 @@ const PostDetails = () => {
             <p className="ml-2 text-sm text-gray-500">comment time show</p>
           </div>
           <p className="text-gray-600 mb-3">{"comment"}</p>
-          <Link 
+          <Link
             to={`/comment-page/${postId}`}
             className="inline-block bg-[#e8dfdf] text-[#9c4f4f] rounded-full px-4 py-2 text-sm font-semibold hover:bg-[#d1c1c1] transition-colors duration-300"
           >
