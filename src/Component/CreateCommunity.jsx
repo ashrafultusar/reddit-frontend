@@ -16,7 +16,7 @@
 //     const data = { communityName, creator: username, description };
 //     // console.log(data)
 //     axios
-//       .post("https://backend-ten-indol-40.vercel.app/api/communities", data)
+//       .post("http://localhost:8000/api/communities", data)
 //       .then((res) => {
 //         toast.success("Community Create successfully")
         
@@ -147,7 +147,7 @@ const CreateCommunity = () => {
     const data = { communityName, creator: username, description };
 
     axios
-      .post("https://backend-ten-indol-40.vercel.app/api/communities", data)
+      .post("http://localhost:8000/api/communities", data)
       .then((res) => {
         toast.success("Community created successfully");
         
