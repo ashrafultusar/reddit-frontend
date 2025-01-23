@@ -32,7 +32,7 @@ const SignUp = () => {
     createUser(email, password)
       .then(() => {
         axios
-          .post("https://backend-ten-indol-40.vercel.app/api/auth/register", data)
+          .post("http://localhost:8000/api/auth/register", data)
           .then(() => {
             toast.success("Account created successfully!");
             form.reset();
@@ -49,7 +49,7 @@ const SignUp = () => {
       .catch((err) => toast.error(`Something Went wrong ${err.message}`));
 
     // axios
-    //   .post('https://backend-ten-indol-40.vercel.app/api/auth/register', data)
+    //   .post('http://localhost:8000/api/auth/register', data)
     //   .then(() => {
     //     toast.success("Account created successfully!");
     //     form.reset();

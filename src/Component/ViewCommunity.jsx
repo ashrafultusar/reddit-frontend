@@ -28,7 +28,7 @@ const ViewCommunity = () => {
 
   useEffect(() => {
     axios
-      .get(`https://backend-ten-indol-40.vercel.app/api/communities/${communityName}`)
+      .get(`http://localhost:8000/api/communities/${communityName}`)
       .then((res) => {
         setCommunity(res.data);
         const diffInSeconds = calculateElapsedTime(res.data.createdAt);

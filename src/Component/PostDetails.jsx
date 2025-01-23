@@ -45,7 +45,7 @@ const PostDetails = () => {
     const fetchPostDetails = async () => {
       try {
         const response = await fetch(
-          `https://backend-ten-indol-40.vercel.app/api/posts/${postId}`
+          `http://localhost:8000/api/posts/${postId}`
         );
         if (!response.ok) throw new Error("Failed to fetch post details");
 

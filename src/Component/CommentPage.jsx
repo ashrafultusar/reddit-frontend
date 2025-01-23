@@ -1,18 +1,36 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CommentPage = () => {
-  const { id } = useParams();
+    const { id } = useParams();
+    const navigate=useNavigate()
   const [comment, setComment] = useState("");
   const [username, setUsername] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Comment:", comment);
-    console.log("Username:", username);
-    // Add further form submission logic here
+
+    const commentDetails = {
+      postId: id,
+      commenter: username,
+      content: comment,
+      };
+      
+      axios
+      .post(`http://localhost:8000/api/comments`,commentDetails)
+      .then((response) => {
+          console.log(response);
+          toast.success('comment success')
+          navigate(`/postD/${id}`)
+      })
+      .catch((error) => {
+        console.error("Error fetching communities:", error);
+      });
+
+
   };
-  console.log(id);
 
   return (
     <div>
