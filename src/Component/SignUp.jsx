@@ -130,7 +130,7 @@ const SignUp = () => {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
             />
-            <p className="text-sm text-yellow-500 mt-1">Wrong Password</p>
+            
           </div>
           <div className="flex items-center mb-4">
             <input
