@@ -15,7 +15,7 @@ const SinglePost = ({ post }) => {
       if (vote === 0) {
         return setVote(0);
       }
-      setVote(vote - 1);
+      setVote(vote - 1); 
     }
     axios
       .patch("http://localhost:8000/api/posts/votes", data)
@@ -29,6 +29,8 @@ const SinglePost = ({ post }) => {
       .then((res) => setComments(res?.data))
       .catch((err) => console.error(err));
   });
+console.log(comments);
+
   return (
     <div className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4">
       <div className="card-header p-3 flex justify-between items-center">
