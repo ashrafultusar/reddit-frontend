@@ -21,7 +21,7 @@ const CreatePost = () => {
     const title = from.title.value;
     const existingLinkFlair = from.existingLinkFlair.value;
     const addLinkFlair = from.addLinkFlair.value;
-    const username = from.username.value;
+    const username = user?.displayName;
     const content = from.content.value;
 
     const postData = {
@@ -143,7 +143,8 @@ const CreatePost = () => {
               </label>
               <input
                 id="username"
-                name="username"
+                disabled
+                placeholder={user?.displayName}
                 type="text"
                 required
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"

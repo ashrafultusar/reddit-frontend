@@ -39,7 +39,7 @@ const SinglePost = ({ post }) => {
             {post?.communityName || "Unknown Community"}
           </span>
           <span className=" mx-3 bg-green-100 px-2 rounded-full">
-            {post?.userName || "Anonymous"}
+            {post?.author || "Anonymous"}
           </span>
           <span className="bg-lime-200 px-2 rounded-full">
             {post?.createdAt && <ElapsedTime timestamp={post.createdAt} />}
