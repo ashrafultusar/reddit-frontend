@@ -117,7 +117,7 @@ const Main = () => {
   //       console.error("Error fetching communities:", error);
   //       setError("Failed to load communities. Please try again later.");
   //     });
-  // }, []); 
+  // }, []);
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/communities")
@@ -134,7 +134,7 @@ const Main = () => {
         setError("Failed to load communities. Please try again later.");
       });
   }, [user]);
-  
+
   return (
     <div className={`flex flex-col h-screen ${isDarkMode ? "dark" : ""}`}>
       {/* Navbar */}
@@ -153,7 +153,13 @@ const Main = () => {
             {/* Home Link */}
             <li>
               <NavLink
-                to="/"
+                to={user ? "/" : "/login"} // Redirect to login if not logged in
+                onClick={(e) => {
+                  if (!user) {
+                    e.preventDefault(); // Prevent default navigation for guests
+                    navigate("/login", { state: { from: "/" } }); // Redirect to login with "from" state
+                  }
+                }}
                 end
                 className={({ isActive }) =>
                   `text-center block px-4 py-2 rounded text-gray-700 dark:text-gray-200 ${
@@ -202,24 +208,14 @@ const Main = () => {
             {/* Rendering Current Communities */}
             {error ? (
   <li className="text-center text-red-500">{error}</li>
-) : data.length > 0 ? (
+) : data && data.length > 0 ? (
   data.map((community) => (
     <li key={community._id}>
       <NavLink
-        to={user ? `/community/${community.communityName}` : "/login"}
-        onClick={(e) => {
-          if (!user) {
-            e.preventDefault(); // Prevent navigation
-            navigate("/login"); // Redirect to the login page
-          }
-        }}
-        className={({ isActive }) =>
-          `block border py-1 text-center rounded text-gray-700 dark:text-gray-200 ${
-            isActive ? "bg-[#9f9f9f] text-white" : ""
-          }`
-        }
+        to={`/community/${community.communityName}`}
+        className="flex items-center justify-center bg-gray-200 rounded-md"
       >
-        {community.communityName}
+        {community?.communityName}
       </NavLink>
     </li>
   ))
@@ -250,4 +246,3 @@ const Main = () => {
 };
 
 export default Main;
-

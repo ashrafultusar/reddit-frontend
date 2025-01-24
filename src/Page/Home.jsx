@@ -49,7 +49,7 @@ const Home = () => {
             onClick={() => handleSortClick("newest")}
           >
             Newest
-          </p>
+          </p> 
           <p
             className={`px-3 py-1 rounded-md cursor-pointer ${
               sortOrder === "oldest" ? "bg-blue-500 text-white" : "bg-[#dcdcdc] text-black"

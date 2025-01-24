@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const CreatePost = () => {
+  const {user}=useContext(AuthContext)
   const navigate = useNavigate(); 
   const [communities, setCommunities] = useState([]);
   useEffect(() => {

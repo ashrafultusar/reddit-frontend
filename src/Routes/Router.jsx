@@ -10,6 +10,7 @@ import ViewCommunity from "../Component/ViewCommunity";
 import UserProfile from "../Page/UserProfile";
 import AdminProfile from "../Page/AdminProfile";
 import CommentPage from "../Component/CommentPage";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -38,7 +39,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/postD/:postId",
-        element: <PostDetails></PostDetails>,
+        element: (
+          <PrivateRoute>
+            <PostDetails></PostDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: "community/:communityName",
@@ -51,10 +56,11 @@ export const router = createBrowserRouter([
       {
         path: "/admin-profile",
         element: <AdminProfile></AdminProfile>,
-      }, {
-        path: '/comment-page/:id',
-        element:<CommentPage></CommentPage>
-      }
+      },
+      {
+        path: "/comment-page/:id",
+        element: <CommentPage></CommentPage>,
+      },
     ],
   },
 ]);
