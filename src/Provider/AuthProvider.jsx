@@ -21,6 +21,7 @@ const AuthProvider = ({ children }) => {
   const [sortOrder, setSortOrder] = useState("newest"); // Track sort order
 const [searchText,setSearchText]=useState('')
 
+  
   // create or signUp user
   const createUser = (email, password) => {
     setLoading(true);
@@ -67,8 +68,8 @@ const [searchText,setSearchText]=useState('')
     posts,
     setData,
     sortOrder,
-    setSortOrder,searchText,setSearchText
-  };
+    setSortOrder,searchText,setSearchText,
+  }; 
 
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>

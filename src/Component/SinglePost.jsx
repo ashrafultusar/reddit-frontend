@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { ElapsedTime } from "./Post";
 import { useEffect, useState } from "react";
 
-const SinglePost = ({ post }) => {
+const SinglePost = ({ post}) => {
   const [vote, setVote] = useState(post?.vote || 0);
   const handleVote = (data) => {
     if (data?.voteChange > 0) {

@@ -64,9 +64,7 @@ const Navbar = () => {
                   src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                 />
               </Link>{" "}
-              <span className="text-gray-700 font-semibold">
-                {user?.displayName}
-              </span>
+          
             </div>
           ) : (
             <button

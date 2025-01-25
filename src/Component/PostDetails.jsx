@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { BiDownvote, BiUpvote } from "react-icons/bi";
 import { Link, useParams } from "react-router-dom";
 
 const calculateElapsedTime = (timestamp) => {
@@ -69,9 +70,21 @@ const PostDetails = () => {
       .catch((err) => console.error(err));
   };
 
-  if (error) return <div>Error: {error}</div>; // Display error message if there's an issue
-  if (!post) return <div>Loading...</div>; // Show loading state if post data is not available yet
+  // comment count api fetch
+  const [comments, setComments] = useState({});
+  useEffect(() => {
+    axios(`http://localhost:8000/api/comments/${post?._id}`)
+      .then((res) => setComments(res?.data))
+      .catch((err) => console.error(err));
+  });
+  // console.log(comments);
 
+  if (error) return <div>Error: {error}</div>; // Display error message if there's an issue
+  if (!post) return <div>Loading...</div>;
+  // Show loading state if post data is not available yet
+  
+  
+  // console.log(post);
   return (
     <div className="">
       <div className="py-10">
@@ -113,9 +126,14 @@ const PostDetails = () => {
             {/* View and Comment Count */}
             <div className="flex items-center justify-between text-sm text-gray-500 mt-4">
               <div className="flex space-x-4">
-                <span>👁️ 1,023 Views</span>
-                <span>💬 4 Comments</span>
+                <span>👁️ {post?.views} Views</span>
+                <span>💬 {comments?.totalCommentCount} Comments</span>
               </div>
+              <div className="flex gap-1 items-center border p-1 rounded-full">
+                <BiUpvote className="text-xl"></BiUpvote>
+                <p>{post?.vote}</p>
+              <BiDownvote className="text-xl"></BiDownvote>
+            </div>
               <div>
                 <Link to={`/comment-page/${postId}`} className="btn">
                   Add Comment
