@@ -4,31 +4,30 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const CommentPage = () => {
-    const { id } = useParams();
-    const navigate=useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [comment, setComment] = useState("");
   const [username, setUsername] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const commentDetails = { 
+    const commentDetails = {
       postId: id,
       commenter: username,
       content: comment,
-      };
-      
-      axios
-      .post(`http://localhost:8000/api/comments`,commentDetails)
+    };
+
+    axios
+      .post(`http://localhost:8000/api/comments`, commentDetails)
       .then((response) => {
-          console.log(response);
-          toast.success('comment success')
-          navigate(`/postD/${id}`)
+        console.log(response);
+        toast.success("comment success");
+        navigate(`/postD/${id}`);
       })
       .catch((error) => {
         console.error("Error fetching communities:", error);
       });
-
   };
 
   return (
