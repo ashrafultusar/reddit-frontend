@@ -20,7 +20,7 @@ const formatElapsedTime = (seconds) => {
   return `${days} day${days !== 1 ? "s" : ""} ago`;
 };
 
-const ElapsedTime = ({ timestamp }) => {
+export const ElapsedTime = ({ timestamp }) => {
   const [elapsedTime, setElapsedTime] = useState(
     calculateElapsedTime(timestamp)
   );
@@ -64,7 +64,7 @@ const PostDetails = () => {
 
   return (
     <div className="">
-      <div className="py-10">
+      <div className="pt-10">
         {/* Post Header Section */}
         <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
           <div className="p-6">

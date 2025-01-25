@@ -1,18 +1,29 @@
-const Comment = ({ comment }) => {
+import { Link } from "react-router-dom";
+import { ElapsedTime } from "./PostDetails";
+
+const Comment = ({ comment, postId }) => {
+  const { commenter, content, createdAt, replies, _id } = comment;
   return (
     <div className="pl-4 border-l border-gray-300 mb-4">
       <div className="mb-2">
         <p>
-          <strong>{comment.commenter}:</strong> {comment.content}
+          <strong>{commenter}:</strong>
+          <small className="text-gray-500">
+            <ElapsedTime timestamp={createdAt} />
+          </small>
         </p>
-        <small className="text-gray-500">
-          {new Date(comment.createdAt).toLocaleString()}
-        </small>
+        <p>{content}</p>
+        <Link
+          to={`/comment-page/${postId}?parentComment=${_id}`}
+          className="px-2 rounded-md text-white font-semibold text-xs bg-orange-600"
+        >
+          Replay
+        </Link>
       </div>
-      {comment.replies.length > 0 && (
+      {replies?.length > 0 && (
         <div>
-          {comment.replies.map((reply) => (
-            <Comment key={reply._id} comment={reply} />
+          {replies?.map((reply) => (
+            <Comment key={reply._id} comment={reply} postId={postId} />
           ))}
         </div>
       )}
@@ -20,4 +31,4 @@ const Comment = ({ comment }) => {
   );
 };
 
-export default Comment
+export default Comment;
