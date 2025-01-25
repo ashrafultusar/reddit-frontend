@@ -65,11 +65,12 @@ const Home = () => {
           <p className="text-black text-2xl font-bold">
             All Posts: {posts?.length}
           </p>
-          {
-            searchText&& <p className="text-2xl font-bold mt-2">
-            Search Text: <span className="text-xl font-medium ">{searchText}</span>
-          </p>
-          }
+          {searchText && (
+            <p className="text-2xl font-bold mt-2">
+              Search Text:{" "}
+              <span className="text-xl font-medium ">{searchText}</span>
+            </p>
+          )}
         </div>
         <div className="flex items-center justify-center gap-4">
           <button
