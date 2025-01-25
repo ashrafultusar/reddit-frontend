@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Comments from "./Comments";
 
+
 const calculateElapsedTime = (timestamp) => {
   const now = new Date();
   const pastTime = new Date(timestamp);
   const diffInSeconds = Math.floor((now - pastTime) / 1000);
   return diffInSeconds;
 };
+
 
 const formatElapsedTime = (seconds) => {
   if (seconds < 60) return `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
@@ -20,28 +22,34 @@ const formatElapsedTime = (seconds) => {
   return `${days} day${days !== 1 ? "s" : ""} ago`;
 };
 
+
 export const ElapsedTime = ({ timestamp }) => {
   const [elapsedTime, setElapsedTime] = useState(
     calculateElapsedTime(timestamp)
   );
+
 
   useEffect(() => {
     const interval = setInterval(() => {
       setElapsedTime(calculateElapsedTime(timestamp));
     }, 1000);
 
+
     return () => clearInterval(interval);
   }, [timestamp]);
+
 
   return (
     <span className="ml-1 text-gray-500">{formatElapsedTime(elapsedTime)}</span>
   );
 };
 
+
 const PostDetails = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [error, setError] = useState(null);
+
 
   useEffect(() => {
     axios(`http://localhost:8000/api/posts/${postId}`)
@@ -50,7 +58,9 @@ const PostDetails = () => {
     viewCount();
   }, [postId]);
 
+
   // console.log(post);
+
 
   const viewCount = () => {
     axios
@@ -59,8 +69,10 @@ const PostDetails = () => {
       .catch((err) => console.error(err));
   };
 
+
   if (error) return <div>Error: {error}</div>; // Display error message if there's an issue
   if (!post) return <div>Loading...</div>; // Show loading state if post data is not available yet
+
 
   return (
     <div className="">
@@ -119,5 +131,6 @@ const PostDetails = () => {
     </div>
   );
 };
+
 
 export default PostDetails;

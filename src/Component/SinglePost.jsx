@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { ElapsedTime } from "./Post";
 import { useEffect, useState } from "react";
 
-const SinglePost = ({ post }) => {
+const SinglePost = ({ post}) => {
   const [vote, setVote] = useState(post?.vote || 0);
   const handleVote = (data) => {
     if (data?.voteChange > 0) {
@@ -30,6 +30,7 @@ const SinglePost = ({ post }) => {
       .catch((err) => console.error(err));
   });
   // console.log(comments);
+
 
   return (
     <div className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4">

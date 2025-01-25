@@ -1,12 +1,14 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
+import useAllUser from "../Hook/useAllUser";
 
 const Navbar = () => {
-  const { logOut, user, setData,setSearchText } = useContext(AuthContext);
+  const { logOut, user, setData, setSearchText } = useContext(AuthContext);
+  const { users } = useAllUser();
 
   const logOutHandler = () => {
     logOut()
@@ -18,13 +20,17 @@ const Navbar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     console.log(e.target.search.value);
-    setSearchText(e.target.search.value)
+    setSearchText(e.target.search.value);
     axios(
       `http://localhost:8000/api/posts/search?query=${e.target.search.value} `
     )
       .then((res) => setData(res?.data))
       .catch((er) => console.error(er));
   };
+
+  const currentUser = users.find((dbUser) => dbUser.email === user?.email);
+  const userRole = currentUser?.role; 
+
   return (
     <div className="">
       {/* Navbar */}
@@ -54,19 +60,27 @@ const Navbar = () => {
         <div className="navbar-end flex items-center space-x-2">
           {/* User Profile Button */}
           {user ? (
-            <div className="flex gap-1 items-center"><span className="text-gray-700 font-semibold">
-            {user?.displayName}
-          </span>
-              <Link to={"/user-profile"}>
-                <img
-                  className="w-10 rounded-full"
-                  alt="User Profile"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                />
-              </Link>{" "}
+            <div className="flex gap-2 items-center">
               <span className="text-gray-700 font-semibold">
                 {user?.displayName}
               </span>
+              {userRole === "admin" ? (
+                <Link to={"/admin-dashboard"}>
+                  <img
+                    className="w-10 rounded-full"
+                    alt="Admin Profile"
+                    src="https://img.icons8.com/color/48/administrator-male.png"
+                  />
+                </Link>
+              ) : (
+                <Link to={"/user-profile"}>
+                  <img
+                    className="w-10 rounded-full"
+                    alt="User Profile"
+                    src="https://img.icons8.com/color/48/user-male-circle.png"
+                  />
+                </Link>
+              )}
             </div>
           ) : (
             <button
