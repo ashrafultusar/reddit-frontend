@@ -17,6 +17,9 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [posts, setData] = useState([]); // Store fetched posts
+  const [sortOrder, setSortOrder] = useState("newest"); // Track sort order
+
   // create or signUp user
   const createUser = (email, password) => {
     setLoading(true);
@@ -41,8 +44,6 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-
-
   // user observer
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -55,7 +56,18 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  const userInfo = { user, loading, createUser, signIn, logOut,updateUserProfile };
+  const userInfo = {
+    user,
+    loading,
+    createUser,
+    signIn,
+    logOut,
+    updateUserProfile,
+    posts,
+    setData,
+    sortOrder,
+    setSortOrder
+  };
 
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>
