@@ -1,9 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const CommentPage = () => {
+  const { user } = useContext(AuthContext);
   const { id } = useParams();
   const navigate = useNavigate();
   const [parentCommentId, setCommentId] = useState(null);
@@ -13,6 +15,7 @@ const CommentPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const username = user.displayName;
 
     const commentDetails = {
       postId: id,
@@ -71,13 +74,9 @@ const CommentPage = () => {
             Username: <span className="text-red-500">*</span>
           </label>
           <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full bg-red-100 border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 mb-4"
-            placeholder="Enter your username..."
-            required
+            placeholder={user?.displayName}
+            className="w-full bg-red-100 border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 mb-4 block cursor-not-allowed"
+            disabled
           />
 
           {/* Submit Button */}
