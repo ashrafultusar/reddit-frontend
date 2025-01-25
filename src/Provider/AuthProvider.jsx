@@ -19,6 +19,7 @@ const AuthProvider = ({ children }) => {
 
   const [posts, setData] = useState([]); // Store fetched posts
   const [sortOrder, setSortOrder] = useState("newest"); // Track sort order
+const [searchText,setSearchText]=useState('')
 
   // create or signUp user
   const createUser = (email, password) => {
@@ -66,7 +67,7 @@ const AuthProvider = ({ children }) => {
     posts,
     setData,
     sortOrder,
-    setSortOrder
+    setSortOrder,searchText,setSearchText
   };
 
   return (
