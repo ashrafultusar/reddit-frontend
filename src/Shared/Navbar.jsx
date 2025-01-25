@@ -3,23 +3,27 @@ import logo from "../assets/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../Provider/AuthProvider";
+import axios from "axios";
 
 const Navbar = () => {
-  const { logOut, user } = useContext(AuthContext);
+  const { logOut, user, setData } = useContext(AuthContext);
 
   const logOutHandler = () => {
     logOut()
       .then(() => toast.success("Logout Success"))
       .catch((err) => toast.error(`${err.message}`));
   };
-  console.log(user);
-  
-  const handelSearch = e => {
-    e.preventDefault()
-  console.log('object');
-}
+  // console.log(user);
 
-
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log(e.target.search.value);
+    axios(
+      `http://localhost:8000/api/posts/search?query=${e.target.search.value} `
+    )
+      .then((res) => setData(res?.data))
+      .catch((er) => console.error(er));
+  };
   return (
     <div className="">
       {/* Navbar */}
@@ -36,14 +40,13 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="navbar-center">
-          <form onSubmit={handelSearch}>
-          <input
-            type="text"
-            name="search"
-            value=""
-            placeholder="Search Phreddit…"
-            className="w-full px-16 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              name="search"
+              placeholder="Search Phreddit..."
+              className="border-2 border-[#EF4444] text-[#EF4444] rounded-md w-full outline-none px-4 py-1"
+            />
           </form>
         </div>
 
@@ -59,7 +62,10 @@ const Navbar = () => {
                   alt="User Profile"
                   src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                 />
-              </Link>  
+              </Link>{" "}
+              <span className="text-gray-700 font-semibold">
+                {user?.displayName}
+              </span>
             </div>
           ) : (
             <button
@@ -78,8 +84,8 @@ const Navbar = () => {
               </button>
             </NavLink>
           ) : (
-            <button 
-              className="btn block btn-sm  bg-gray-200 text-gray-500 rounded-full px-4 cursor-not-allowed"
+            <button
+              className="btn btn-sm bg-gray-200 text-gray-500 rounded-full px-4 cursor-not-allowed"
               disabled
             >
               Create Post

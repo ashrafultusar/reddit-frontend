@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Post from "../Component/Post";
 import axios from "axios";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Home = () => {
-  const [posts, setData] = useState([]); // Store fetched posts
-  const [sortOrder, setSortOrder] = useState("newest"); // Track sort order
+  const { posts, setData, sortOrder, setSortOrder } = useContext(AuthContext);
 
   useEffect(() => {
     // Fetch posts from API
@@ -12,20 +12,42 @@ const Home = () => {
       const fetchedPosts = response.data;
 
       // Sort posts based on sortOrder
-      const sortedData = sortPostsByCreatedAt(fetchedPosts, sortOrder);
+      const sortedData = sortPosts(fetchedPosts, sortOrder);
       setData(sortedData);
     });
   }, [sortOrder]); // Re-run effect when sortOrder changes
 
   // Sorting function
-  const sortPostsByCreatedAt = (posts, order) => {
+  const sortPosts = (posts, order) => {
     return posts.sort((a, b) => {
       if (order === "newest") {
         return new Date(b.createdAt) - new Date(a.createdAt);
       } else if (order === "oldest") {
         return new Date(a.createdAt) - new Date(b.createdAt);
+      } else if (order === "activity") {
+        // Sort by latest comment activity
+        const latestCommentA = a.comments.length
+          ? new Date(
+              Math.max(
+                ...a.comments.map((comment) =>
+                  new Date(comment.createdAt).getTime()
+                )
+              )
+            )
+          : new Date(a.createdAt);
+        const latestCommentB = b.comments.length
+          ? new Date(
+              Math.max(
+                ...b.comments.map((comment) =>
+                  new Date(comment.createdAt).getTime()
+                )
+              )
+            )
+          : new Date(b.createdAt);
+
+        return latestCommentB - latestCommentA; // Most recent activity first
       }
-      return 0;
+      return 0; // Default (no sorting)
     });
   };
 
@@ -42,22 +64,36 @@ const Home = () => {
           All Posts: {posts?.length}
         </p>
         <div className="flex items-center justify-center gap-4">
-          <p
+          <button
             className={`px-3 py-1 rounded-md cursor-pointer ${
-              sortOrder === "newest" ? "bg-blue-500 text-white" : "bg-[#dcdcdc] text-black"
+              sortOrder === "newest"
+                ? "bg-blue-500 text-white"
+                : "bg-[#dcdcdc] text-black"
             }`}
             onClick={() => handleSortClick("newest")}
           >
             Newest
-          </p> 
-          <p
+          </button>
+          <button
             className={`px-3 py-1 rounded-md cursor-pointer ${
-              sortOrder === "oldest" ? "bg-blue-500 text-white" : "bg-[#dcdcdc] text-black"
+              sortOrder === "oldest"
+                ? "bg-blue-500 text-white"
+                : "bg-[#dcdcdc] text-black"
             }`}
             onClick={() => handleSortClick("oldest")}
           >
             Oldest
-          </p>
+          </button>
+          <button
+            className={`px-3 py-1 rounded-md cursor-pointer ${
+              sortOrder === "activity"
+                ? "bg-blue-500 text-white"
+                : "bg-[#dcdcdc] text-black"
+            }`}
+            onClick={() => handleSortClick("activity")}
+          >
+            Activity
+          </button>
         </div>
       </div>
 
