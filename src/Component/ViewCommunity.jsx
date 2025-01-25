@@ -58,7 +58,7 @@ const ViewCommunity = () => {
         return new Date(a.createdAt) - new Date(b.createdAt);
       }
     }) || [];
-
+// console.log(sortedPosts);
   return (
     <div>
       {/* Community details */}
@@ -88,11 +88,12 @@ const ViewCommunity = () => {
           <p>{community?.description}</p>
           <p>Created: {formatElapsedTime(elapsedTime)}</p>
           <div className="flex">
-            <p>Posts: {community?.postsCount}</p>
+            <p>Posts: {sortedPosts?.length}</p>
             <p className="mx-2">|</p>
             <p>Members: {community?.membersCount}</p>
           </div>
         </div>
+        
       </div>
       <hr className="bg-black h-1" />
 

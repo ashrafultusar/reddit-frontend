@@ -12,7 +12,7 @@ const CommentPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const commentDetails = {
+    const commentDetails = { 
       postId: id,
       commenter: username,
       content: comment,
