@@ -24,7 +24,7 @@ const ViewCommunity = () => {
   const { communityName } = useParams();
   const [community, setCommunity] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [sortOrder, setSortOrder] = useState("Newest"); // State for sorting order
+  const [sortOrder, setSortOrder] = useState("Activity"); // Default sorting by activity
 
   useEffect(() => {
     axios
@@ -49,16 +49,34 @@ const ViewCommunity = () => {
 
   if (!community) return <p>Loading...</p>;
 
+  // Calculate latest activity for each post
+  const postsWithActivity =
+    community?.posts?.map((post) => {
+      const latestComment = post.comments.reduce(
+        (latest, comment) =>
+          new Date(comment.createdAt) > new Date(latest.createdAt)
+            ? comment
+            : latest,
+        { createdAt: post.createdAt } // Default to post creation time if no comments
+      );
+      return {
+        ...post,
+        latestActivity: new Date(latestComment.createdAt),
+      };
+    }) || [];
+
   // Sorting logic based on sortOrder
   const sortedPosts =
-    community?.posts?.slice().sort((a, b) => {
-      if (sortOrder === "Newest") {
-        return new Date(b.createdAt) - new Date(a.createdAt);
+    postsWithActivity.slice().sort((a, b) => {
+      if (sortOrder === "Activity") {
+        return b.latestActivity - a.latestActivity; // Sort by latest activity
+      } else if (sortOrder === "Newest") {
+        return new Date(b.createdAt) - new Date(a.createdAt); // Sort by newest post
       } else {
-        return new Date(a.createdAt) - new Date(b.createdAt);
+        return new Date(a.createdAt) - new Date(b.createdAt); // Sort by oldest post
       }
     }) || [];
-// console.log(sortedPosts);
+  // console.log(sortedPosts);
   return (
     <div>
       {/* Community details */}
@@ -73,6 +91,14 @@ const ViewCommunity = () => {
               }`}
             >
               Newest
+            </button>
+            <button
+              onClick={() => setSortOrder("Activity")}
+              className={`bg-[#dcdcdc] text-black px-3 py-1 rounded-md ${
+                sortOrder === "Activity" ? "font-bold" : ""
+              }`}
+            >
+              Activity
             </button>
             <button
               onClick={() => setSortOrder("Oldest")}
@@ -93,7 +119,6 @@ const ViewCommunity = () => {
             <p>Members: {community?.membersCount}</p>
           </div>
         </div>
-        
       </div>
       <hr className="bg-black h-1" />
 
@@ -113,7 +138,9 @@ const ViewCommunity = () => {
             >
               <div className="card-header p-3 flex justify-between items-center">
                 <div className="text-sm text-gray-600">
-                  <span className="font-medium bg-blue-100 px-2 rounded-full mr-2">{post.author}</span>
+                  <span className="font-medium bg-blue-100 px-2 rounded-full mr-2">
+                    {post.author}
+                  </span>
                   <span className="bg-green-100 px-2 rounded-full">
                     {formatElapsedTime(calculateElapsedTime(post.createdAt))}
                   </span>

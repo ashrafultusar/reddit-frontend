@@ -13,7 +13,6 @@ const Main = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
- 
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/communities")
