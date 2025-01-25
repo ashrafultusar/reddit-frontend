@@ -31,6 +31,7 @@ const SinglePost = ({ post}) => {
   });
   // console.log(comments);
 
+
   return (
     <div className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4">
       <div className="card-header p-3 flex justify-between items-center">

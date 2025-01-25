@@ -82,8 +82,7 @@ const PostDetails = () => {
   if (error) return <div>Error: {error}</div>; // Display error message if there's an issue
   if (!post) return <div>Loading...</div>;
   // Show loading state if post data is not available yet
-  
-  
+
   // console.log(post);
   return (
     <div className="">
@@ -132,8 +131,8 @@ const PostDetails = () => {
               <div className="flex gap-1 items-center border p-1 rounded-full">
                 <BiUpvote className="text-xl"></BiUpvote>
                 <p>{post?.vote}</p>
-              <BiDownvote className="text-xl"></BiDownvote>
-            </div>
+                <BiDownvote className="text-xl"></BiDownvote>
+              </div>
               <div>
                 <Link to={`/comment-page/${postId}`} className="btn">
                   Add Comment

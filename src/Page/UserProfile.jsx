@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import useAllUser from '../Hook/useAllUser';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const UserProfile = () => {
+    const {user}=useContext(AuthContext)
+    const { users } = useAllUser();
     const [activeTab, setActiveTab] = useState("posts");
 
     // Dummy data
@@ -25,6 +29,14 @@ const UserProfile = () => {
         { id: 1, postTitle: "React vs Angular", comment: "React is faster..." },
         { id: 2, postTitle: "Best Practices in JS", comment: "Always use const..." },
     ];
+
+    const currentUser = users.find((dbUser) => dbUser.email === user?.email);
+    const userRole = currentUser?.role; 
+
+
+
+
+
 
     return (
         <div className="p-4 max-w-6xl mx-auto">
