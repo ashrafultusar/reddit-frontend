@@ -1,13 +1,15 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const CommentPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [parentCommentId, setCommentId] = useState(null);
   const [comment, setComment] = useState("");
   const [username, setUsername] = useState("");
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,12 +18,13 @@ const CommentPage = () => {
       postId: id,
       commenter: username,
       content: comment,
+      parentComment: parentCommentId,
     };
 
     axios
       .post(`http://localhost:8000/api/comments`, commentDetails)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
+        // console.log(response);
         toast.success("comment success");
         navigate(`/postD/${id}`);
       })
@@ -29,6 +32,13 @@ const CommentPage = () => {
         console.error("Error fetching communities:", error);
       });
   };
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    setCommentId(queryParams.get("parentComment"));
+  }, [location]);
+
+  // console.log(parentCommentId);
 
   return (
     <div>

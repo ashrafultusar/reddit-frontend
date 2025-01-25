@@ -24,7 +24,7 @@ const ViewCommunity = () => {
   const { communityName } = useParams();
   const [community, setCommunity] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [sortOrder, setSortOrder] = useState("Activity"); // Default sorting by activity
+  const [sortOrder, setSortOrder] = useState("Newest"); // Default sorting by activity
 
   useEffect(() => {
     axios
