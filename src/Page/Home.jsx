@@ -4,7 +4,8 @@ import axios from "axios";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Home = () => {
-  const { posts, setData, sortOrder, setSortOrder } = useContext(AuthContext);
+  const { posts, setData, sortOrder, setSortOrder, searchText } =
+    useContext(AuthContext);
 
   useEffect(() => {
     // Fetch posts from API
@@ -60,9 +61,16 @@ const Home = () => {
     <div className="space-y-6 flex flex-col h-screen overflow-x-hidden">
       {/* Header Section with Post Count and Sorting */}
       <div className="flex justify-between mb-10 sticky top-0 z-10">
-        <p className="text-black text-2xl font-bold">
-          All Posts: {posts?.length}
-        </p>
+        <div>
+          <p className="text-black text-2xl font-bold">
+            All Posts: {posts?.length}
+          </p>
+          {
+            searchText&& <p className="text-2xl font-bold mt-2">
+            Search Text: <span className="text-xl font-medium ">{searchText}</span>
+          </p>
+          }
+        </div>
         <div className="flex items-center justify-center gap-4">
           <button
             className={`px-3 py-1 rounded-md cursor-pointer ${

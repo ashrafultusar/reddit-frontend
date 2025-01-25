@@ -6,7 +6,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
 
 const Navbar = () => {
-  const { logOut, user, setData } = useContext(AuthContext);
+  const { logOut, user, setData,setSearchText } = useContext(AuthContext);
 
   const logOutHandler = () => {
     logOut()
@@ -18,6 +18,7 @@ const Navbar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     console.log(e.target.search.value);
+    setSearchText(e.target.search.value)
     axios(
       `http://localhost:8000/api/posts/search?query=${e.target.search.value} `
     )
