@@ -182,7 +182,7 @@ const CreatePost = () => {
           </div>
         </form>
       </section>
-    </div>
+    </div> 
   );
 };
 

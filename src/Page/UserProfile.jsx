@@ -158,6 +158,21 @@ const UserProfile = () => {
                 >
                   <h3 className="font-bold">{post.title}</h3>
                   <p>{post.content}</p>
+
+                  <div className="flex  gap-4 pt-6">
+                    <Link
+                      to={`/update-post/${post._id}`}
+                      className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+                    >
+                      Update
+                    </Link>
+                    <button
+                      onClick={() => openModal(community._id)}
+                      className="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-700"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               ))
             ) : (
@@ -174,13 +189,16 @@ const UserProfile = () => {
                   key={community._id}
                   className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
                 >
-                  <p className="font-bold">Name: <span className="mr-2">{community?.communityName}</span></p>
+                  <p className="font-bold">
+                    Name:{" "}
+                    <span className="mr-2">{community?.communityName}</span>
+                  </p>
                   <div className="flex  gap-4 pt-6">
                     <Link
                       to={`/updateCommunity/${community._id}`}
                       className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700"
                     >
-                      Edit
+                      Update
                     </Link>
                     <button
                       onClick={() => openModal(community._id)}

@@ -12,6 +12,7 @@ import AdminProfile from "../Page/AdminProfile";
 import CommentPage from "../Component/CommentPage";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import UpdateCommunity from "../Component/UpdateCommunity";
+import UpdatePost from "../Component/UpdatePost";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
       }, {
         path: '/updateCommunity/:communityId',
         element: <UpdateCommunity></UpdateCommunity>
+      },
+      {
+        path: "/update-post/:id",
+        element:<UpdatePost></UpdatePost>
       }
     ],
   },

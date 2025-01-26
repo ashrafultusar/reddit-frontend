@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const UpdateCommunity = () => {
-  const { communityId } = useParams(); // Get communityId from URL
+  const { communityId } = useParams();
   const [community, setCommunity] = useState({});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -42,10 +43,10 @@ const UpdateCommunity = () => {
       );
 
       if (response.ok) {
-        alert("Community updated successfully!");
-        navigate("/user-profile"); // Redirect to user profile or desired page
+        toast.success("Community updated successfully!");
+        navigate("/user-profile"); 
       } else {
-        alert("Failed to update community.");
+        toast.error("Failed to update community.");
       }
     } catch (error) {
       console.error("Error updating community:", error);
