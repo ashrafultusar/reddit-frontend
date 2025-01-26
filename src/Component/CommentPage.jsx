@@ -16,12 +16,13 @@ const CommentPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const username = user.displayName;
+    const email=user?.email
 
     const commentDetails = {
       postId: id,
       commenter: username,
       content: comment,
-      parentComment: parentCommentId,
+      parentComment: parentCommentId,email
     };
 
     axios

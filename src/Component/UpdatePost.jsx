@@ -70,8 +70,8 @@ const UpdatePost = () => {
   }
 
   return (
-    <div className="p-6 max-w-lg mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Update Post</h2>
+    <div className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md">
+      <h2 className="text-2xl font-bold mb-4 text-center">Update Post</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-gray-700">Community Name</label>
@@ -141,7 +141,7 @@ const UpdatePost = () => {
           </button>
         </div>
       </form>
-
+ 
       {/* Confirmation Modal */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
