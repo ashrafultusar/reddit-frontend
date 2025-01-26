@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import { ElapsedTime } from "../Component/PostDetails";
 
 const UserProfile = () => {
     const { user } = useContext(AuthContext); // Firebase authenticated user
@@ -48,8 +49,12 @@ const UserProfile = () => {
         <div className="p-4 max-w-6xl mx-auto">
             {/* User Information */}
             <div className="mb-6 bg-white shadow-lg rounded-lg p-6">
-                <h1 className="text-2xl font-bold">{user?.displayName || "No Name"}</h1>
-                <p>Email: {user?.email}</p>
+                <h1 className="text-2xl font-bold">NAME: 
+                     <span className="ml-2 uppercase">{user?.displayName || "No Name"}</span></h1>
+                <p className="font-bold mt-3">Email: <span className="font-medium ml-1 ">{user?.email}</span></p>
+                <p>Member Since: <span>{user?.metadata?.creationTime && (
+                    <ElapsedTime timestamp={user?.metadata?.creationTime} />
+                  )} </span></p>
             </div>
 
             {/* Tabs */}
