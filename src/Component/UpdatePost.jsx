@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const UpdatePost = () => {
   const { id } = useParams();
@@ -15,38 +16,52 @@ const UpdatePost = () => {
   });
 
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false); // Control modal visibility
 
- 
+  // Fetch post data
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/api/posts/${id}`);
-        setPostData(response.data); 
+        setPostData(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching post:", error.message);
-        alert("Failed to load post data!");
+        toast.error("Failed to load post data!");
       }
     };
     fetchPost();
   }, [id]);
 
-  
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPostData((prev) => ({ ...prev, [name]: value }));
   };
 
-
+  // Handle post update
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:8000/api/posts/${id}`, postData); 
-      alert("Post updated successfully!");
-      navigate("/user-profile"); 
+      await axios.patch(`http://localhost:8000/api/posts/${id}`, postData);
+      toast.success("Post updated successfully!");
+      navigate("/user-profile");
     } catch (error) {
       console.error("Error updating post:", error.message);
-      alert("Failed to update post!");
+      toast.error("Failed to update post!");
+    }
+  };
+
+  // Handle post deletion
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:8000/api/posts/${id}`);
+      toast.success("Post deleted successfully!");
+      setShowModal(false);
+      navigate("/user-profile");
+    } catch (error) {
+      console.error("Error deleting post:", error.message);
+      toast.error("Failed to delete post!");
     }
   };
 
@@ -110,13 +125,46 @@ const UpdatePost = () => {
             required
           ></textarea>
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Update Post
-        </button>
+        <div className="flex justify-between">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Update Post
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowModal(true)}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          >
+            Delete Post
+          </button>
+        </div>
       </form>
+
+      {/* Confirmation Modal */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-md shadow-md">
+            <h2 className="text-lg font-semibold mb-4">Are you sure?</h2>
+            <p className="mb-4">This action will permanently delete the post.</p>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => setShowModal(false)}
+                className="bg-gray-300 px-4 py-2 rounded-md"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="bg-red-600 text-white px-4 py-2 rounded-md"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

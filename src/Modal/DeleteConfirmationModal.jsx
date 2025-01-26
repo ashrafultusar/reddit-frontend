@@ -9,7 +9,7 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onDelete }) => {
         <h2 className="text-lg font-bold text-center">Are you sure?</h2>
         <p className="text-center mt-2">
           Do you really want to delete this community? This action cannot be
-          undone.
+          undone. 
         </p>
         <div className="mt-6 flex justify-center gap-4">
           <button
