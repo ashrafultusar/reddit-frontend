@@ -85,7 +85,7 @@ const PostDetails = () => {
               <span className="font-semibold text-[16px] bg-blue-100 px-2 rounded-full mr-2">
                 {post?.communityName}
               </span>
-              <span>
+              <span> 
                 <span className="bg-lime-200 px-2 rounded-full ml-1">
                   {post?.createdAt && (
                     <ElapsedTime timestamp={post.createdAt} />
