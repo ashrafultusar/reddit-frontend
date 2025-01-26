@@ -46,11 +46,11 @@ export const router = createBrowserRouter([
             <PostDetails></PostDetails>
           </PrivateRoute>
         ),
-      },
+      }, 
       {
         path: "community/:communityName",
         element: <ViewCommunity></ViewCommunity>,
-      },
+      }, 
       {
         path: "/user-profile",
         element: <UserProfile></UserProfile>,

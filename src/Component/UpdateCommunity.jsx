@@ -111,7 +111,6 @@
 
 // export default UpdateCommunity;
 
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -229,23 +228,22 @@ const UpdateCommunity = () => {
               ></textarea>
             </div>
           </div>
-          <div className="mt-6 text-center">
+          <div className="mt-6 flex justify-between text-center">
             <button
               type="submit"
               className="px-6 py-2 text-white bg-blue-500 rounded-md"
             >
               Update Community
             </button>
+            <button
+              onClick={handleDelete}
+              className="px-6 py-2 text-white bg-red-500 rounded-md"
+            >
+              Delete Community
+            </button>
           </div>
         </form>
-        <div className="mt-4 text-center">
-          <button
-            onClick={handleDelete}
-            className="px-6 py-2 text-white bg-red-500 rounded-md"
-          >
-            Delete Community
-          </button>
-        </div>
+        <div className="mt-4  text-center"></div>
       </section>
     </div>
   );

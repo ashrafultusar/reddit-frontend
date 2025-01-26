@@ -65,7 +65,7 @@ const Navbar = () => {
                 {user?.displayName}
               </span>
               {userRole === "admin" ? (
-                <Link to={"/admin-dashboard"}>
+                <Link to={"/admin-profile"}>
                   <img
                     className="w-10 rounded-full"
                     alt="Admin Profile"
