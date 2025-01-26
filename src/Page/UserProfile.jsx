@@ -7,6 +7,7 @@ const UserProfile = () => {
     const [activeTab, setActiveTab] = useState("posts");
     const [userPosts, setUserPosts] = useState([]);
     const [userCommunities, setUserCommunities] = useState([]);
+    const [userComments, setUserComments] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -44,7 +45,7 @@ const UserProfile = () => {
     if (loading) {
         return <p>Loading...</p>;
     }
-
+console.log(userCommunities);
     return (
         <div className="p-4 max-w-6xl mx-auto">
             {/* User Information */}
@@ -68,6 +69,12 @@ const UserProfile = () => {
                 <button
                     className={`px-4 py-2 ${activeTab === "communities" ? "border-b-2 border-blue-500 font-bold" : ""}`}
                     onClick={() => setActiveTab("communities")}
+                >
+                    Communities
+                </button>
+                <button
+                    className={`px-4 py-2 ${activeTab === "comments" ? "border-b-2 border-blue-500 font-bold" : ""}`}
+                    onClick={() => setActiveTab("comments")}
                 >
                     Communities
                 </button>
@@ -96,6 +103,20 @@ const UserProfile = () => {
                         {userCommunities.length > 0 ? (
                             userCommunities.map((community) => (
                                 <div key={community.id} className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
+                                    <h3 className="font-bold">{community?.communityName}</h3>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No communities found.</p>
+                        )}
+                    </div>
+                )}
+                {activeTab === "comments" && (
+                    <div>
+                        <h2 className="text-xl font-semibold mb-4">Comments</h2>
+                        {userComments.length > 0 ? (
+                            userComments.map((comments) => (
+                                <div key={comments.id} className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm">
                                     <h3 className="font-bold">{community.name}</h3>
                                 </div>
                             ))
