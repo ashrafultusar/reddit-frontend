@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { ElapsedTime } from "../Component/PostDetails";
 import { Link } from "react-router-dom";
+import DeleteConfirmationModal from "../Modal/DeleteConfirmationModal";
+import { toast } from "react-toastify";
 
 const UserProfile = () => {
   const { user } = useContext(AuthContext); // Firebase authenticated user
@@ -10,6 +12,43 @@ const UserProfile = () => {
   const [userCommunities, setUserCommunities] = useState([]);
   const [userComments, setUserComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCommunityId, setSelectedCommunityId] = useState(null);
+
+  // Function to open the delete modal
+  const openModal = (communityId) => {
+    setSelectedCommunityId(communityId);
+    setIsModalOpen(true);
+  };
+
+  // Function to close the delete modal
+  const closeModal = () => {
+    setSelectedCommunityId(null);
+    setIsModalOpen(false);
+  };
+
+  // Function to handle community deletion
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/communities/id/${selectedCommunityId}`,
+        { method: "DELETE" }
+      );
+
+      if (response.ok) {
+        toast.success("Community deleted successfully!");
+        // Update the local state
+        setUserCommunities((prev) =>
+          prev.filter((community) => community._id !== selectedCommunityId)
+        );
+        closeModal();
+      } else {
+        toast.error("Failed to delete community.");
+      }
+    } catch (error) {
+      console.error("Error deleting community:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -50,7 +89,7 @@ const UserProfile = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
-  console.log(userCommunities);
+
   return (
     <div className="p-4 max-w-6xl mx-auto">
       {/* User Information */}
@@ -131,15 +170,26 @@ const UserProfile = () => {
             <h2 className="text-xl font-semibold mb-4">Communities</h2>
             {userCommunities.length > 0 ? (
               userCommunities.map((community) => (
-                <Link to={`/updateCommunity/${community._id}`}>
-                  {" "}
-                  <div
-                    key={community.id}
-                    className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
-                  >
-                    <p className="font-bold">{community?.communityName}</p>
+                <div
+                  key={community._id}
+                  className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
+                >
+                  <p className="font-bold">Name: <span className="mr-2">{community?.communityName}</span></p>
+                  <div className="flex  gap-4 pt-6">
+                    <Link
+                      to={`/updateCommunity/${community._id}`}
+                      className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      onClick={() => openModal(community._id)}
+                      className="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-700"
+                    >
+                      Delete
+                    </button>
                   </div>
-                </Link>
+                </div>
               ))
             ) : (
               <p>No communities found.</p>
@@ -155,15 +205,22 @@ const UserProfile = () => {
                   key={comments.id}
                   className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
                 >
-                  <h3 className="font-bold">{community.name}</h3>
+                  <h3 className="font-bold">{comments.name}</h3>
                 </div>
               ))
             ) : (
-              <p>No communities found.</p>
+              <p>No comments found.</p>
             )}
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onDelete={handleDelete}
+      />
     </div>
   );
 };

@@ -1,99 +1,109 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../Provider/AuthProvider';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 const UpdateCommunity = () => {
+  const { communityId } = useParams(); // Get communityId from URL
+  const [community, setCommunity] = useState({});
   const [errors, setErrors] = useState({});
-  const {user}=useContext(AuthContext)
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCommunity = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/communities/id/${communityId}`
+        );
+        const data = await response.json();
+        setCommunity(data);
+      } catch (error) {
+        console.error("Error fetching community:", error);
+      }
+    };
+
+    fetchCommunity();
+  }, [communityId]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/communities/id/${communityId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            communityName: community.communityName,
+            description: community.description,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        alert("Community updated successfully!");
+        navigate("/user-profile"); // Redirect to user profile or desired page
+      } else {
+        alert("Failed to update community.");
+      }
+    } catch (error) {
+      console.error("Error updating community:", error);
+    }
+  };
+
+  const handleChange = (e) => {
+    setCommunity({
+      ...community,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <div>
-      <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
-          <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white text-center">
-            Update Community
-          </h2>
-
-          <form >
-            <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-              <div>
-                <label
-                  className="text-gray-700 dark:text-gray-200"
-                  htmlFor="communityName"
-                >
-                  Community Name <span className="text-red-600">*</span>
-                </label>
-                <input
-                  id="communityName"
-                  name="communityName"
-                  type="text"
-                  className={`block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring ${
-                    errors.communityName
-                      ? "border-red-500"
-                      : "focus:border-blue-400"
-                  }`}
-                />
-                {errors.communityName && (
-                  <p className="mt-2 text-sm text-red-600">
-                  
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  className="text-gray-700 dark:text-gray-200"
-                  htmlFor="username"
-                >
-                  Username <span className="text-red-600">*</span>
-                </label>
-                <input
-                  id="username"
-                  disabled
-                  placeholder={user?.displayName}
-                  type="text"
-                  className={`block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring ${
-                    errors.username ? "border-red-500" : "focus:border-blue-400"
-                  }`}
-                />
-                {errors.username && (
-                  <p className="mt-2 text-sm text-red-600">{errors.username}</p>
-                )}
-              </div>
+      <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md">
+        <h2 className="text-lg font-semibold text-gray-700 text-center">
+          Update Community
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 gap-6 mt-4">
+            <div>
+              <label className="text-gray-700" htmlFor="communityName">
+                Community Name
+              </label>
+              <input
+                id="communityName"
+                name="communityName"
+                type="text"
+                value={community.communityName || ""}
+                onChange={handleChange}
+                className="block w-full px-4 py-2 border rounded-md"
+              />
             </div>
-
-            <div className="mt-4">
-              <label
-                className="text-gray-700 dark:text-gray-200"
-                htmlFor="description"
-              >
-                Description <span className="text-red-600">*</span>
+            <div>
+              <label className="text-gray-700" htmlFor="description">
+                Description
               </label>
               <textarea
                 id="description"
                 name="description"
-                rows="5"
-                className={`block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring ${
-                  errors.description
-                    ? "border-red-500"
-                    : "focus:border-blue-400"
-                }`}
-                placeholder="Write about your community here..."
+                rows="4"
+                value={community.description || ""}
+                onChange={handleChange}
+                className="block w-full px-4 py-2 border rounded-md"
               ></textarea>
-              {errors.description && (
-                <p className="mt-2 text-sm text-red-600">
-                  {errors.description}
-                </p>
-              )}
             </div>
-
-            <div className="flex justify-center mt-6">
-              <button
-                type="submit"
-                className="px-8 py-2.5 leading-5 bg-[#FF4500] hover:bg-orange-700 rounded-md text-white"
-              >
-                Engender Community
-              </button>
-            </div>
-          </form>
-        </section>
+          </div>
+          <div className="mt-6 text-center">
+            <button
+              type="submit"
+              className="px-6 py-2 text-white bg-blue-500 rounded-md"
+            >
+              Update Community
+            </button>
+          </div>
+        </form>
+      </section>
     </div>
   );
 };
