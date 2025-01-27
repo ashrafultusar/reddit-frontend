@@ -13,6 +13,7 @@ import CommentPage from "../Component/CommentPage";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import UpdateCommunity from "../Component/UpdateCommunity";
 import UpdatePost from "../Component/UpdatePost";
+import UpdateComment from "../Component/UpdateComment";
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ export const router = createBrowserRouter([
       {
         path: "/update-post/:id",
         element:<UpdatePost></UpdatePost>
+      },
+      {
+        path: '/updateComment/:id',
+        element:<UpdateComment></UpdateComment>
       }
     ],
   },

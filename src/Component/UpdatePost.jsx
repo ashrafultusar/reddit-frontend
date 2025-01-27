@@ -14,7 +14,7 @@ const UpdatePost = () => {
     addLinkFlair: "",
     content: "",
   });
-
+ 
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false); 
 
@@ -71,7 +71,7 @@ const UpdatePost = () => {
 
   return (
     <div className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-center">Update Post</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">Update Pos</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-gray-700">Community Name</label>
