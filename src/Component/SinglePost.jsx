@@ -1,37 +1,47 @@
-import { BiUpvote } from "react-icons/bi";
-import { BiDownvote } from "react-icons/bi";
+import { BiUpvote, BiDownvote } from "react-icons/bi";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { ElapsedTime } from "./Post";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const SinglePost = ({ post }) => {
+  const { user, userData } = useContext(AuthContext);
   const [comments, setComments] = useState({});
   const [vote, setVote] = useState(post?.vote || 0);
+  const [localUserVote, setLocalUserVote] = useState(null);
+
+  // Check if the user has already voted
+  useEffect(() => {
+    const existingVote = post?.voters?.find(
+      (voter) => voter.userId === user?.email
+    );
+    setLocalUserVote(existingVote || null);
+  }, [post?.voters, user?.email]);
+
   const handleVote = (data) => {
-    if (data?.voteChange > 0) {
-      setVote(vote + 1);
+    // Update vote locally for immediate feedback
+    if (data?.voteType === "upvote") {
+      setVote((prev) => prev + 1);
+    } else if (data?.voteType === "downvote") {
+      setVote((prev) => prev - 1);
     }
-    if (data?.voteChange < 0) {
-      if (vote === 0) {
-        return setVote(0);
-      }
-      setVote(vote - 1);
-    }
+
+    // Update localUserVote state
+    setLocalUserVote({ userId: user?.email, voteType: data?.voteType });
+
+    // Send vote to the server
     axios
-      .patch("http://localhost:8000/api/posts/votes", data)
+      .post(`http://localhost:8000/api/posts/votes/${post?._id}`, data)
       .then((res) => console.log(res))
       .catch((err) => console.error(err));
   };
-
 
   useEffect(() => {
     axios(`http://localhost:8000/api/comments/${post?._id}`)
       .then((res) => setComments(res?.data))
       .catch((err) => console.error(err));
-  });
- 
-
+  }, [post?._id]);
 
   return (
     <div className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4">
@@ -56,48 +66,61 @@ const SinglePost = ({ post }) => {
         <p className="text-sm text-blue-500 mt-2">
           {post?.flair || "No Flair"}
         </p>
-        <p className="text-sm text-gray-600 mt-2">
-          {/* Post Content */}
-          <p className="text-gray-700 mt-4">
-            {post?.content?.length > 80
-              ? `${post.content.substring(0, 80)}...`
-              : post?.content || "No content available"}
-          </p>
+        <p className="text-gray-700 mt-4">
+          {post?.content?.length > 80
+            ? `${post.content.substring(0, 80)}...`
+            : post?.content || "No content available"}
         </p>
         <div className="mt-4 flex items-center justify-around text-sm text-gray-500">
-          <span className="flex items-center justify-center gap-1 border p-1 rounded-full">
-            <button>
+          <span
+            className={`flex items-center justify-center gap-1 border p-1 rounded-full ${
+              localUserVote?.voteType === "upvote" ? "border-orange-500" : ""
+            }`}
+          >
+            <button
+              disabled={
+                localUserVote?.voteType === "upvote" || userData?.reputation < 50
+              }
+              onClick={() =>
+                handleVote({
+                  email: `${user?.email}`,
+                  voteType: "upvote",
+                })
+              }
+            >
               <BiUpvote
-                onClick={() =>
-                  handleVote({
-                    postId: `${post?._id}`,
-                    voteChange: 1,
-                  })
-                }
-                className="text-xl"
+                className={`text-xl ${
+                  localUserVote?.voteType === "upvote" ? "text-orange-500" : ""
+                }`}
               />
             </button>
             <p>{vote}</p>
-            <button>
+            <button
+              disabled={
+                localUserVote?.voteType === "downvote" ||
+                userData?.reputation < 50
+              }
+              onClick={() =>
+                handleVote({
+                  email: `${user?.email}`,
+                  voteType: "downvote",
+                })
+              }
+            >
               <BiDownvote
-                onClick={() =>
-                  handleVote({
-                    postId: `${post?._id}`,
-                    voteChange: -1,
-                  })
-                }
-                className="text-xl"
+                className={`text-xl ${
+                  localUserVote?.voteType === "downvote" ? "text-orange-500" : ""
+                }`}
               />
             </button>
           </span>
           <span>👁️ {post?.views || 0} Views</span>
           <span>💬 {comments?.totalCommentCount || 0} Comments</span>
           <span className="text-blue-400 font-medium">
-            <Link to={`/postD/${post._id}`} >View More</Link>
+            <Link to={`/postD/${post._id}`}>View More</Link>
           </span>
         </div>
       </div>
-      <div></div>
     </div>
   );
 };

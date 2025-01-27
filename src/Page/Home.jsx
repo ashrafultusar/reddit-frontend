@@ -8,16 +8,13 @@ const Home = () => {
     useContext(AuthContext);
 
   useEffect(() => {
- 
     axios.get("http://localhost:8000/api/posts").then((response) => {
       const fetchedPosts = response.data;
 
-    
       const sortedData = sortPosts(fetchedPosts, sortOrder);
       setData(sortedData);
     });
-  }, [sortOrder]); 
-
+  }, [sortOrder]);
 
   const sortPosts = (posts, order) => {
     return posts.sort((a, b) => {
@@ -26,7 +23,6 @@ const Home = () => {
       } else if (order === "oldest") {
         return new Date(a.createdAt) - new Date(b.createdAt);
       } else if (order === "activity") {
-       
         const latestCommentA = a.comments.length
           ? new Date(
               Math.max(
@@ -46,12 +42,11 @@ const Home = () => {
             )
           : new Date(b.createdAt);
 
-        return latestCommentB - latestCommentA; 
+        return latestCommentB - latestCommentA;
       }
-      return 0; 
+      return 0;
     });
   };
-
 
   const handleSortClick = (order) => {
     setSortOrder(order);
@@ -59,7 +54,6 @@ const Home = () => {
 
   return (
     <div className="space-y-6 flex flex-col h-screen overflow-x-hidden">
-    
       <div className="flex justify-between mb-10 sticky top-0 z-10">
         <div>
           <p className="text-black text-2xl font-bold">
@@ -106,7 +100,6 @@ const Home = () => {
         </div>
       </div>
 
-    
       <hr className="bg-black mb-6" />
 
       {/* Post List Section */}
