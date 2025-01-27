@@ -1,35 +1,48 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const CommentPage = () => {
-    const { id } = useParams();
-    const navigate=useNavigate()
+  const { user } = useContext(AuthContext);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [parentCommentId, setCommentId] = useState(null);
   const [comment, setComment] = useState("");
   const [username, setUsername] = useState("");
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const username = user.displayName;
+    const email=user?.email
 
     const commentDetails = {
       postId: id,
       commenter: username,
       content: comment,
-      };
+      parentComment: parentCommentId,email
+    };
+
+    axios
+      .post(`http://localhost:8000/api/comments`, commentDetails)
+      .then(() => {
       
-      axios
-      .post(`http://localhost:8000/api/comments`,commentDetails)
-      .then((response) => {
-          console.log(response);
-          toast.success('comment success')
-          navigate(`/postD/${id}`)
+        toast.success("comment success");
+        navigate(`/postD/${id}`);
       })
       .catch((error) => {
         console.error("Error fetching communities:", error);
       });
-
   };
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    setCommentId(queryParams.get("parentComment"));
+  }, [location]);
+
+  
 
   return (
     <div>
@@ -62,13 +75,9 @@ const CommentPage = () => {
             Username: <span className="text-red-500">*</span>
           </label>
           <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full bg-red-100 border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 mb-4"
-            placeholder="Enter your username..."
-            required
+            placeholder={user?.displayName}
+            className="w-full bg-red-100 border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 mb-4 block cursor-not-allowed"
+            disabled
           />
 
           {/* Submit Button */}

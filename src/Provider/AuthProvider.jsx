@@ -5,6 +5,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.init";
 
@@ -16,6 +17,11 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [posts, setData] = useState([]); 
+  const [sortOrder, setSortOrder] = useState("newest"); 
+const [searchText,setSearchText]=useState('')
+
+  
   // create or signUp user
   const createUser = (email, password) => {
     setLoading(true);
@@ -33,10 +39,16 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  // update profile
+  const updateUserProfile = (name) => {
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+    });
+  };
+
   // user observer
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      // console.log("current user", currentUser);
       setUser(currentUser);
       setLoading(false);
     });
@@ -45,7 +57,18 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  const userInfo = { user, loading, createUser, signIn, logOut };
+  const userInfo = {
+    user,
+    loading,
+    createUser,
+    signIn,
+    logOut,
+    updateUserProfile,
+    posts,
+    setData,
+    sortOrder,
+    setSortOrder,searchText,setSearchText,
+  }; 
 
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>

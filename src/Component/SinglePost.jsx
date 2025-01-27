@@ -6,6 +6,7 @@ import { ElapsedTime } from "./Post";
 import { useEffect, useState } from "react";
 
 const SinglePost = ({ post }) => {
+  const [comments, setComments] = useState({});
   const [vote, setVote] = useState(post?.vote || 0);
   const handleVote = (data) => {
     if (data?.voteChange > 0) {
@@ -15,7 +16,7 @@ const SinglePost = ({ post }) => {
       if (vote === 0) {
         return setVote(0);
       }
-      setVote(vote - 1); 
+      setVote(vote - 1);
     }
     axios
       .patch("http://localhost:8000/api/posts/votes", data)
@@ -23,13 +24,14 @@ const SinglePost = ({ post }) => {
       .catch((err) => console.error(err));
   };
 
-  const [comments, setComments] = useState({});
+
   useEffect(() => {
     axios(`http://localhost:8000/api/comments/${post?._id}`)
       .then((res) => setComments(res?.data))
       .catch((err) => console.error(err));
   });
-// console.log(comments);
+ 
+
 
   return (
     <div className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4">
@@ -39,7 +41,7 @@ const SinglePost = ({ post }) => {
             {post?.communityName || "Unknown Community"}
           </span>
           <span className=" mx-3 bg-green-100 px-2 rounded-full">
-            {post?.userName || "Anonymous"}
+            {post?.author || "Anonymous"}
           </span>
           <span className="bg-lime-200 px-2 rounded-full">
             {post?.createdAt && <ElapsedTime timestamp={post.createdAt} />}
@@ -91,7 +93,7 @@ const SinglePost = ({ post }) => {
           <span>👁️ {post?.views || 0} Views</span>
           <span>💬 {comments?.totalCommentCount || 0} Comments</span>
           <span className="text-blue-400 font-medium">
-            <Link to={`/postD/${post._id}`}>View More</Link>
+            <Link to={`/postD/${post._id}`} >View More</Link>
           </span>
         </div>
       </div>

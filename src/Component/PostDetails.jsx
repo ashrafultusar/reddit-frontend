@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Comments from "./Comments";
 
 const calculateElapsedTime = (timestamp) => {
   const now = new Date();
@@ -19,7 +20,7 @@ const formatElapsedTime = (seconds) => {
   return `${days} day${days !== 1 ? "s" : ""} ago`;
 };
 
-const ElapsedTime = ({ timestamp }) => {
+export const ElapsedTime = ({ timestamp }) => {
   const [elapsedTime, setElapsedTime] = useState(
     calculateElapsedTime(timestamp)
   );
@@ -41,26 +42,15 @@ const PostDetails = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [error, setError] = useState(null);
-
+  
   useEffect(() => {
-    const fetchPostDetails = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8000/api/posts/${postId}`
-        );
-        if (!response.ok) throw new Error("Failed to fetch post details");
-
-        const postData = await response.json();
-        setPost(postData);
-      } catch (error) {
-        setError(error.message); // Handle the error
-        console.error("Error fetching post:", error);
-      }
-    };
-
-    fetchPostDetails();
+    axios(`http://localhost:8000/api/posts/${postId}`)
+      .then((res) => setPost(res?.data))
+      .catch((err) => setError(err?.message));
     viewCount();
   }, [postId]);
+
+  
 
   const viewCount = () => {
     axios
@@ -69,21 +59,20 @@ const PostDetails = () => {
       .catch((err) => console.error(err));
   };
 
-  if (error) return <div>Error: {error}</div>; // Display error message if there's an issue
-  if (!post) return <div>Loading...</div>; // Show loading state if post data is not available yet
+  if (error) return <div>Error: {error}</div>; 
+  if (!post) return <div>Loading...</div>; 
 
   return (
     <div className="">
-      <div className="py-10">
-        {/* Post Header Section */}
+      <div className="pt-10">
+      
         <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
           <div className="p-6">
-            {/* Community Name and Timestamp */}
+           
             <div className="text-sm text-gray-500">
               <span className="font-semibold text-[16px] bg-blue-100 px-2 rounded-full mr-2">
                 {post?.communityName}
-              </span>{" "}
-              |{" "}
+              </span>
               <span>
                 <span className="bg-lime-200 px-2 rounded-full ml-1">
                   {post?.createdAt && (
@@ -113,11 +102,14 @@ const PostDetails = () => {
             {/* View and Comment Count */}
             <div className="flex items-center justify-between text-sm text-gray-500 mt-4">
               <div className="flex space-x-4">
-                <span>👁️ 1,023 Views</span>
+                <span>👁️ {post?.views}</span>
                 <span>💬 4 Comments</span>
               </div>
               <div>
-                <Link to={`/comment-page/${postId}`} className="btn">
+                <Link
+                  to={`/comment-page/${postId}`}
+                  className="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-700"
+                >
                   Add Comment
                 </Link>
               </div>
@@ -126,26 +118,7 @@ const PostDetails = () => {
           <hr className="" />
         </div>
       </div>
-
-      {/* comment show here */}
-      <div className="max-w-2xl">
-        <div className="bg-white p-4 rounded-lg ">
-          <div className="flex items-center mb-2">
-            <p className="text-lg font-semibold text-gray-700 mr-2">
-              User Name
-            </p>
-            <span className="text-sm text-gray-500">|</span>
-            <p className="ml-2 text-sm text-gray-500">comment time show</p>
-          </div>
-          <p className="text-gray-600 mb-3">{"comment"}</p>
-          <Link
-            to={`/comment-page/${postId}`}
-            className="inline-block bg-[#e8dfdf] text-[#9c4f4f] rounded-full px-4 py-2 text-sm font-semibold hover:bg-[#d1c1c1] transition-colors duration-300"
-          >
-            Reply
-          </Link>
-        </div>
-      </div>
+      <Comments postId={postId} />
     </div>
   );
 };

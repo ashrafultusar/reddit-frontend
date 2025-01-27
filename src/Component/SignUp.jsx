@@ -7,7 +7,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { createUser } = useContext(AuthContext);
+  const { createUser,updateUserProfile } = useContext(AuthContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -17,51 +17,45 @@ const SignUp = () => {
     const email = form.email.value;
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
-
-    // full name
+  
+    
     const name = `${firstName} ${lastName}`;
-
-    // matching between two password field
+  
+    // Matching between two password fields
     if (password !== confirmPassword) {
       toast.error("Passwords do not match!");
       return;
     }
-
+  
     const data = { name, email, password };
-
+  
+    // Create user
     createUser(email, password)
       .then(() => {
-        axios
-          .post("http://localhost:8000/api/auth/register", data)
+        // Update user profile
+        updateUserProfile(name)
           .then(() => {
-            toast.success("Account created successfully!");
-            form.reset();
+            // If profile update is successful, proceed with registration
+            axios
+              .post("http://localhost:8000/api/auth/register", data)
+              .then(() => {
+                toast.success("Account created successfully!");
+                form.reset();
+              })
+              .catch((err) => {
+                if (err.response && err.response.status === 400) {
+                  toast.error("Email already in use!");
+                } else {
+                  toast.error("An error occurred. Please try again later.");
+                }
+              });
+            navigate("/");
           })
-          .catch((err) => {
-            if (err.response && err.response.status === 400) {
-              toast.error("Email already in use!");
-            } else {
-              toast.error("An error occurred. Please try again later.");
-            }
-          });
-        navigate("/");
+          .catch((err) => toast.error(`Error updating profile: ${err.message}`));
       })
-      .catch((err) => toast.error(`Something Went wrong ${err.message}`));
-
-    // axios
-    //   .post('http://localhost:8000/api/auth/register', data)
-    //   .then(() => {
-    //     toast.success("Account created successfully!");
-    //     form.reset();
-    //   })
-    //   .catch((err) => {
-    //     if (err.response && err.response.status === 400) {
-    //       toast.error("Email already in use!");
-    //     } else {
-    //       toast.error("An error occurred. Please try again later.");
-    //     }
-    //   });
+      .catch((err) => toast.error(`Something went wrong: ${err.message}`));
   };
+  
 
   return (
     <div className=" flex items-center justify-center">
@@ -130,7 +124,6 @@ const SignUp = () => {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
             />
-            <p className="text-sm text-yellow-500 mt-1">Wrong Password</p>
           </div>
           <div className="flex items-center mb-4">
             <input

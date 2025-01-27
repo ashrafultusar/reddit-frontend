@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const CreatePost = () => {
-  const navigate = useNavigate(); 
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [communities, setCommunities] = useState([]);
   useEffect(() => {
     axios("http://localhost:8000/api/communities")
@@ -19,27 +21,29 @@ const CreatePost = () => {
     const title = from.title.value;
     const existingLinkFlair = from.existingLinkFlair.value;
     const addLinkFlair = from.addLinkFlair.value;
-    const username = from.username.value;
+    const username = user?.displayName;
     const content = from.content.value;
+    const email = user?.email;
 
     const postData = {
       communityName,
       title,
       existingLinkFlair,
       addLinkFlair,
-      author:username,
+      author: username,
       content,
+      email,
     };
-    
-    axios.post("http://localhost:8000/api/posts", postData)
-      .then(res => {
-        toast.success("Post add successfully")
-        navigate('/')
-    })
-      .catch(err => console.error(err))
-   
-  };
 
+    axios
+      .post("http://localhost:8000/api/posts", postData)
+      .then((res) => {
+        toast.success("Post add successfully");
+        navigate("/");
+      })
+      .catch((err) => console.error(err));
+  };
+  console.log(user);
   return (
     <div>
       <section className="max-w-4xl p-8 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
@@ -141,7 +145,8 @@ const CreatePost = () => {
               </label>
               <input
                 id="username"
-                name="username"
+                disabled
+                placeholder={user?.displayName}
                 type="text"
                 required
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-500 focus:outline-none focus:ring"
@@ -177,7 +182,7 @@ const CreatePost = () => {
           </div>
         </form>
       </section>
-    </div>
+    </div> 
   );
 };
 
