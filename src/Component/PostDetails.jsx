@@ -59,16 +59,16 @@ const PostDetails = () => {
       .catch((err) => console.error(err));
   };
 
-  if (error) return <div>Error: {error}</div>; // Display error message if there's an issue
-  if (!post) return <div>Loading...</div>; // Show loading state if post data is not available yet
+  if (error) return <div>Error: {error}</div>; 
+  if (!post) return <div>Loading...</div>; 
 
   return (
     <div className="">
       <div className="pt-10">
-        {/* Post Header Section */}
+      
         <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
           <div className="p-6">
-            {/* Community Name and Timestamp */}
+           
             <div className="text-sm text-gray-500">
               <span className="font-semibold text-[16px] bg-blue-100 px-2 rounded-full mr-2">
                 {post?.communityName}

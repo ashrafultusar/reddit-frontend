@@ -5,11 +5,11 @@ import axios from "axios";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Main = () => {
-  const isDarkMode = true; // Toggle dark mode if needed
-  const { user } = useContext(AuthContext); // Access the logged-in user
-  const navigate = useNavigate(); // For navigation
+  const isDarkMode = true; 
+  const { user } = useContext(AuthContext); 
+  const navigate = useNavigate(); 
 
-  // State to hold community data and error messages
+ 
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
@@ -22,7 +22,7 @@ const Main = () => {
           const userJoinedB = user?.joinedCommunities?.includes(b._id);
           return userJoinedA === userJoinedB ? 0 : userJoinedA ? -1 : 1;
         });
-        setData(sortedData); // Update state with sorted community data
+        setData(sortedData); 
       })
       .catch((error) => {
         console.error("Error fetching communities:", error);
@@ -48,11 +48,11 @@ const Main = () => {
             {/* Home Link */}
             <li>
               <NavLink
-                to={user ? "/" : "/login"} // Redirect to login if not logged in
+                to={user ? "/" : "/login"} 
                 onClick={(e) => {
                   if (!user) {
-                    e.preventDefault(); // Prevent default navigation for guests
-                    navigate("/login", { state: { from: "/" } }); // Redirect to login with "from" state
+                    e.preventDefault(); 
+                    navigate("/login", { state: { from: "/" } }); 
                   }
                 }}
                 end

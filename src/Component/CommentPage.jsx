@@ -28,7 +28,7 @@ const CommentPage = () => {
     axios
       .post(`http://localhost:8000/api/comments`, commentDetails)
       .then(() => {
-        // console.log(response);
+      
         toast.success("comment success");
         navigate(`/postD/${id}`);
       })
@@ -42,7 +42,7 @@ const CommentPage = () => {
     setCommentId(queryParams.get("parentComment"));
   }, [location]);
 
-  // console.log(parentCommentId);
+  
 
   return (
     <div>

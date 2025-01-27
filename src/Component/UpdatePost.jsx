@@ -16,7 +16,7 @@ const UpdatePost = () => {
   });
 
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false); // Control modal visibility
+  const [showModal, setShowModal] = useState(false); 
 
   // Fetch post data
   useEffect(() => {
@@ -52,7 +52,7 @@ const UpdatePost = () => {
     }
   };
 
-  // Handle post deletion
+  // Handle post delete
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:8000/api/posts/${id}`);

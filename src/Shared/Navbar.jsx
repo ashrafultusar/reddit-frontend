@@ -15,7 +15,7 @@ const Navbar = () => {
       .then(() => toast.success("Logout Success"))
       .catch((err) => toast.error(`${err.message}`));
   };
-  // console.log(user);
+
 
   const handleSearch = (e) => {
     e.preventDefault();

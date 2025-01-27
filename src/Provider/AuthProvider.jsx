@@ -17,8 +17,8 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const [posts, setData] = useState([]); // Store fetched posts
-  const [sortOrder, setSortOrder] = useState("newest"); // Track sort order
+  const [posts, setData] = useState([]); 
+  const [sortOrder, setSortOrder] = useState("newest"); 
 const [searchText,setSearchText]=useState('')
 
   
@@ -49,7 +49,6 @@ const [searchText,setSearchText]=useState('')
   // user observer
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      // console.log("current user", currentUser);
       setUser(currentUser);
       setLoading(false);
     });
