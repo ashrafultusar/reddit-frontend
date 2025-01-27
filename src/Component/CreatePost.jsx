@@ -33,6 +33,7 @@ const CreatePost = () => {
       author: username,
       content,
       email,
+      authorEmail: email,
     };
 
     axios
@@ -182,7 +183,7 @@ const CreatePost = () => {
           </div>
         </form>
       </section>
-    </div> 
+    </div>
   );
 };
 
