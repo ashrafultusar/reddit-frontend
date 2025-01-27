@@ -29,7 +29,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (user?.email) {
       axios(`http://localhost:8000/api/auth/user/${user?.email}`)
         .then((res) => setuserData(res?.data))
         .catch((err) => console.error(err));
