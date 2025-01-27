@@ -15,7 +15,7 @@ const Navbar = () => {
       .then(() => toast.success("Logout Success"))
       .catch((err) => toast.error(`${err.message}`));
   };
-  // console.log(user);
+
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -65,7 +65,7 @@ const Navbar = () => {
                 {user?.displayName}
               </span>
               {userRole === "admin" ? (
-                <Link to={"/admin-dashboard"}>
+                <Link to={"/admin-profile"}>
                   <img
                     className="w-10 rounded-full"
                     alt="Admin Profile"

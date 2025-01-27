@@ -9,59 +9,6 @@ const SignUp = () => {
   const navigate = useNavigate();
   const { createUser,updateUserProfile } = useContext(AuthContext);
 
-  // const handleRegister = (e) => {
-  //   e.preventDefault();
-  //   const form = e.target;
-  //   const firstName = form.firstName.value;
-  //   const lastName = form.lastName.value;
-  //   const email = form.email.value;
-  //   const password = form.password.value;
-  //   const confirmPassword = form.confirmPassword.value;
-
-  //   // full name
-  //   const name = `${firstName} ${lastName}`;
-
-  //   // matching between two password field
-  //   if (password !== confirmPassword) {
-  //     toast.error("Passwords do not match!");
-  //     return;
-  //   }
-
-  //   const data = { name, email, password };
-
-  //   createUser(email, password)
-  //     .then(() => {
-  //       axios
-  //         .post("http://localhost:8000/api/auth/register", data)
-  //         .then(() => {
-  //           toast.success("Account created successfully!");
-  //           form.reset();
-  //         })
-  //         .catch((err) => {
-  //           if (err.response && err.response.status === 400) {
-  //             toast.error("Email already in use!");
-  //           } else {
-  //             toast.error("An error occurred. Please try again later.");
-  //           }
-  //         });
-  //       navigate("/");
-  //     })
-  //     .catch((err) => toast.error(`Something Went wrong ${err.message}`));
-
-  //   // axios
-  //   //   .post('http://localhost:8000/api/auth/register', data)
-  //   //   .then(() => {
-  //   //     toast.success("Account created successfully!");
-  //   //     form.reset();
-  //   //   })
-  //   //   .catch((err) => {
-  //   //     if (err.response && err.response.status === 400) {
-  //   //       toast.error("Email already in use!");
-  //   //     } else {
-  //   //       toast.error("An error occurred. Please try again later.");
-  //   //     }
-  //   //   });
-  // };
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -71,7 +18,7 @@ const SignUp = () => {
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
   
-    // Full name
+    
     const name = `${firstName} ${lastName}`;
   
     // Matching between two password fields

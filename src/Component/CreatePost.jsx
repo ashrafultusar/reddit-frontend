@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const CreatePost = () => {
-  const {user}=useContext(AuthContext)
-  const navigate = useNavigate(); 
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [communities, setCommunities] = useState([]);
   useEffect(() => {
     axios("http://localhost:8000/api/communities")
@@ -23,25 +23,27 @@ const CreatePost = () => {
     const addLinkFlair = from.addLinkFlair.value;
     const username = user?.displayName;
     const content = from.content.value;
+    const email = user?.email;
 
     const postData = {
       communityName,
       title,
       existingLinkFlair,
       addLinkFlair,
-      author:username,
+      author: username,
       content,
+      email,
     };
-    
-    axios.post("http://localhost:8000/api/posts", postData)
-      .then(res => {
-        toast.success("Post add successfully")
-        navigate('/')
-    })
-      .catch(err => console.error(err))
-   
-  };
 
+    axios
+      .post("http://localhost:8000/api/posts", postData)
+      .then((res) => {
+        toast.success("Post add successfully");
+        navigate("/");
+      })
+      .catch((err) => console.error(err));
+  };
+  console.log(user);
   return (
     <div>
       <section className="max-w-4xl p-8 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
@@ -180,7 +182,7 @@ const CreatePost = () => {
           </div>
         </form>
       </section>
-    </div>
+    </div> 
   );
 };
 

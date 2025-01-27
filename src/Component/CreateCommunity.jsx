@@ -38,18 +38,20 @@ const CreateCommunity = () => {
     const communityName = form.communityName.value;
     const username = user?.displayName;
     const description = form.description.value;
+    const email = user?.email;
 
     const validationErrors = validateInputs(
       communityName,
       username,
-      description
+      description,
+      email
     );
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
-    const data = { communityName, creator: username, description };
+    const data = { communityName, creator: username, description,email };
 
     axios
       .post("http://localhost:8000/api/communities", data)
@@ -106,8 +108,7 @@ const CreateCommunity = () => {
                 <input
                   id="username"
                   disabled
-                  
-              placeholder={user?.displayName}
+                  placeholder={user?.displayName}
                   type="text"
                   className={`block w-full px-4 py-2 mt-2 text-gray-700 bg-[#efe6e6] border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:outline-none focus:ring ${
                     errors.username ? "border-red-500" : "focus:border-blue-400"

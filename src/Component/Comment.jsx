@@ -15,7 +15,7 @@ const Comment = ({ comment, postId }) => {
         <p>{content}</p>
         <Link
           to={`/comment-page/${postId}?parentComment=${_id}`}
-          className="px-2 rounded-md text-white font-semibold text-xs bg-orange-600"
+          className="px-1 bg-red-500 text-white rounded-md hover:bg-red-700"
         >
           Replay
         </Link>

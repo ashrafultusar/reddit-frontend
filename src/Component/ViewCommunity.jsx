@@ -24,7 +24,7 @@ const ViewCommunity = () => {
   const { communityName } = useParams();
   const [community, setCommunity] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [sortOrder, setSortOrder] = useState("Newest"); // Default sorting by activity
+  const [sortOrder, setSortOrder] = useState("Newest"); 
 
   useEffect(() => {
     axios
@@ -57,7 +57,7 @@ const ViewCommunity = () => {
           new Date(comment.createdAt) > new Date(latest.createdAt)
             ? comment
             : latest,
-        { createdAt: post.createdAt } // Default to post creation time if no comments
+        { createdAt: post.createdAt } 
       );
       return {
         ...post,
@@ -69,14 +69,14 @@ const ViewCommunity = () => {
   const sortedPosts =
     postsWithActivity.slice().sort((a, b) => {
       if (sortOrder === "Activity") {
-        return b.latestActivity - a.latestActivity; // Sort by latest activity
+        return b.latestActivity - a.latestActivity; 
       } else if (sortOrder === "Newest") {
-        return new Date(b.createdAt) - new Date(a.createdAt); // Sort by newest post
+        return new Date(b.createdAt) - new Date(a.createdAt);
       } else {
-        return new Date(a.createdAt) - new Date(b.createdAt); // Sort by oldest post
+        return new Date(a.createdAt) - new Date(b.createdAt); 
       }
     }) || [];
-  // console.log(sortedPosts);
+
   return (
     <div>
       {/* Community details */}
