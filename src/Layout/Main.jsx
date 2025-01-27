@@ -6,7 +6,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 
 const Main = () => {
   const isDarkMode = true; 
-  const { user } = useContext(AuthContext); 
+  const { user, relode } = useContext(AuthContext); 
   const navigate = useNavigate(); 
 
  
@@ -28,7 +28,7 @@ const Main = () => {
         console.error("Error fetching communities:", error);
         setError("Failed to load communities. Please try again later.");
       });
-  }, [user]);
+  }, [user, relode]);
 
   return (
     <div className={`flex flex-col h-screen ${isDarkMode ? "dark" : ""}`}>

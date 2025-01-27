@@ -20,7 +20,8 @@ const AuthProvider = ({ children }) => {
   const [posts, setData] = useState([]);
   const [sortOrder, setSortOrder] = useState("newest");
   const [searchText, setSearchText] = useState("");
-  const [userData, setuserData]= useState("")
+  const [userData, setuserData] = useState("");
+  const [relode, setRelode] = useState(false);
 
   // create or signUp user
   const createUser = (email, password) => {
@@ -70,7 +71,10 @@ const AuthProvider = ({ children }) => {
     setSortOrder,
     searchText,
     setSearchText,
-    userData, setuserData
+    userData,
+    setuserData,
+    relode,
+    setRelode,
   };
 
   return (
