@@ -166,7 +166,7 @@ const UserProfile = () => {
             <h2 className="text-xl font-semibold mb-4">Communities</h2>
             {userCommunities.length > 0 ? (
               userCommunities.map((community) => (
-                <Link to={`/updateCommunity/${community._id}`}>
+                <Link to={`/updateCommunity/${community?._id}`}>
                   <div
                     key={community._id}
                     className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm border flex"
@@ -184,12 +184,13 @@ const UserProfile = () => {
             )}
           </div>
         )}
+        
         {activeTab === "comments" && (
           <div >
             <h2 className="text-xl font-semibold mb-4">Comments</h2>
             {userComments?.length > 0 ? (
               userComments?.map((comment) => (
-                <Link to={`/updateComment/${comment._id}`}>
+                <Link to={`/updateComment/${comment?._id}`}>
                   {" "}
                   <div
                     key={comment?._id}
