@@ -17,11 +17,12 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const [posts, setData] = useState([]); 
-  const [sortOrder, setSortOrder] = useState("newest"); 
-const [searchText,setSearchText]=useState('')
+  const [posts, setData] = useState([]);
+  const [sortOrder, setSortOrder] = useState("newest");
+  const [searchText, setSearchText] = useState("");
+  const [userData, setuserData] = useState("");
+  const [relode, setRelode] = useState(false);
 
-  
   // create or signUp user
   const createUser = (email, password) => {
     setLoading(true);
@@ -67,8 +68,14 @@ const [searchText,setSearchText]=useState('')
     posts,
     setData,
     sortOrder,
-    setSortOrder,searchText,setSearchText,
-  }; 
+    setSortOrder,
+    searchText,
+    setSearchText,
+    userData,
+    setuserData,
+    relode,
+    setRelode,
+  };
 
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>

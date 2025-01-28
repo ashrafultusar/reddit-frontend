@@ -7,15 +7,17 @@ import axios from "axios";
 import useAllUser from "../Hook/useAllUser";
 
 const Navbar = () => {
-  const { logOut, user, setData, setSearchText } = useContext(AuthContext);
+  const { logOut, user, setData, setSearchText, setuserData } =
+    useContext(AuthContext);
   const { users } = useAllUser();
+
+  const [userRole, setUserRole] = useState("");
 
   const logOutHandler = () => {
     logOut()
       .then(() => toast.success("Logout Success"))
       .catch((err) => toast.error(`${err.message}`));
   };
-
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -28,8 +30,12 @@ const Navbar = () => {
       .catch((er) => console.error(er));
   };
 
-  const currentUser = users.find((dbUser) => dbUser.email === user?.email);
-  const userRole = currentUser?.role; 
+  useEffect(() => {
+    const currentUser = users.find((dbUser) => dbUser.email === user?.email);
+    // const userRole = currentUser?.role;
+    setUserRole(currentUser?.role);
+    setuserData(currentUser);
+  }, [user?.email, users]);
 
   return (
     <div className="">

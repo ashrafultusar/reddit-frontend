@@ -4,11 +4,13 @@ import { ElapsedTime } from "../Component/PostDetails";
 import { Link } from "react-router-dom";
 
 const AdminProfile = () => {
-  const { user } = useContext(AuthContext);
+  const { user,userData } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("users");
+  const [communities, setCommunities] = useState([]);
+  const [allUser, setAllUser] = useState([]);
+
 
   // all user load
-  const [allUser, setAllUser] = useState([]);
   useEffect(() => {
     fetch("http://localhost:8000/api/auth/users")
       .then((response) => response.json())
@@ -16,22 +18,12 @@ const AdminProfile = () => {
   }, []);
 
   // all community load
-  const [communities, setCommunities] = useState([]);
   useEffect(() => {
     fetch("http://localhost:8000/api/communities")
       .then((response) => response.json())
       .then((data) => setCommunities(data));
   }, []);
 
-  console.log(communities);
-
-  // Dummy data
-  const adminInfo = {
-    displayName: "Admin John Doe",
-    email: "admin@example.com",
-    memberSince: "January 1, 2020",
-    reputation: 999,
-  };
 
   const posts = [
     { id: 1, title: "Understanding React" },
@@ -42,6 +34,9 @@ const AdminProfile = () => {
     { id: 1, postTitle: "React Basics", comment: "React is amazing..." },
     { id: 2, postTitle: "JS Tips", comment: "Always use let and const..." },
   ];
+  console.log(userData);
+  
+
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
@@ -58,7 +53,8 @@ const AdminProfile = () => {
             <ElapsedTime timestamp={user?.metadata?.creationTime} />
           )}
         </p>
-        <p>Reputation: 990 points</p>
+      
+        <p>Reputation: { userData?.reputation}</p>
       </div>
 
       {/* Tabs */}
@@ -116,7 +112,7 @@ const AdminProfile = () => {
                   <h3 className="font-bold">{user.displayName}</h3>
                   <p>Name: {user.name}</p>
                   <p>Email: {user.email}</p>
-                  <p>Reputation: 100 points</p>
+                  <p>Reputation: { user?.reputation}</p>
                 </div>
               </Link>
             ))}

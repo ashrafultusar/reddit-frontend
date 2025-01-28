@@ -4,12 +4,14 @@ import { ElapsedTime } from "../Component/PostDetails";
 import { Link } from "react-router-dom";
 import DeleteConfirmationModal from "../Modal/DeleteConfirmationModal";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const UserProfile = () => {
   const { user } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("posts");
   const [userPosts, setUserPosts] = useState([]);
   const [userCommunities, setUserCommunities] = useState([]);
+
   const [userComments, setUserComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,9 +48,20 @@ const UserProfile = () => {
           (community) => community.email === user?.email
         );
 
+        // fetch comments
+        const commentsResponse = await fetch(
+          "http://localhost:8000/api/comments/all"
+        );
+        const commentsData = await commentsResponse.json();
+
+        const filteredComments = commentsData.filter(
+          (comment) => comment.email === user?.email
+        );
+
         // Update state
         setUserPosts(filteredPosts);
         setUserCommunities(filteredCommunities);
+        setUserComments(filteredComments)
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -60,6 +73,15 @@ const UserProfile = () => {
       fetchUserData();
     }
   }, [user]);
+
+  // // all comment fetch
+  // const [comments, setComments] = useState();
+  // useEffect(() => {
+  //   axios(`http://localhost:8000/api/comments/all`)
+  //     .then((res) => setComments(res?.data))
+  //     .catch((err) => console.error(err));
+  // }, []);
+  console.log(userComments);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -144,7 +166,7 @@ const UserProfile = () => {
             <h2 className="text-xl font-semibold mb-4">Communities</h2>
             {userCommunities.length > 0 ? (
               userCommunities.map((community) => (
-                <Link to={`/updateCommunity/${community._id}`}>
+                <Link to={`/updateCommunity/${community?._id}`}>
                   <div
                     key={community._id}
                     className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm border flex"
@@ -162,17 +184,25 @@ const UserProfile = () => {
             )}
           </div>
         )}
+        
         {activeTab === "comments" && (
-          <div>
+          <div >
             <h2 className="text-xl font-semibold mb-4">Comments</h2>
-            {userComments.length > 0 ? (
-              userComments.map((comment) => (
-                <div
-                  key={comment.id}
-                  className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
-                >
-                  <h3 className="font-bold">{comment.name}</h3>
-                </div>
+            {userComments?.length > 0 ? (
+              userComments?.map((comment) => (
+                <Link to={`/updateComment/${comment?._id}`}>
+                  {" "}
+                  <div
+                    key={comment?._id}
+                    className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
+                  >
+                    <h3 className="font-bold">
+                      {comment?.content?.length > 20
+                        ? comment?.content?.substring(0, 20) + "..."
+                        : comment?.content}
+                    </h3>
+                  </div>
+                </Link>
               ))
             ) : (
               <p>No comments found.</p>
