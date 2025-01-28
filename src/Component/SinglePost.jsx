@@ -79,7 +79,7 @@ const SinglePost = ({ post }) => {
           >
             <button
               disabled={
-                localUserVote?.voteType === "upvote" || userData?.reputation < 50
+                localUserVote?.voteType === "upvote" || userData?.reputation < 50 || !user
               }
               onClick={() =>
                 handleVote({
@@ -98,7 +98,7 @@ const SinglePost = ({ post }) => {
             <button
               disabled={
                 localUserVote?.voteType === "downvote" ||
-                userData?.reputation < 50
+                userData?.reputation < 50 || !user
               }
               onClick={() =>
                 handleVote({

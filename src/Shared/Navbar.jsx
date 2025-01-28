@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,9 +7,11 @@ import axios from "axios";
 import useAllUser from "../Hook/useAllUser";
 
 const Navbar = () => {
-  const { logOut, user, setData, setSearchText, userData, setuserData } =
+  const { logOut, user, setData, setSearchText, setuserData } =
     useContext(AuthContext);
   const { users } = useAllUser();
+
+  const [userRole, setUserRole] = useState("");
 
   const logOutHandler = () => {
     logOut()
@@ -29,15 +31,11 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (user?.email) {
-      axios(`http://localhost:8000/api/auth/user/${user?.email}`)
-        .then((res) => setuserData(res?.data))
-        .catch((err) => console.error(err));
-    }
-  }, [user?.email]);
-
-  const currentUser = users.find((dbUser) => dbUser.email === user?.email);
-  const userRole = currentUser?.role;
+    const currentUser = users.find((dbUser) => dbUser.email === user?.email);
+    // const userRole = currentUser?.role;
+    setUserRole(currentUser?.role);
+    setuserData(currentUser);
+  }, [user?.email, users]);
 
   return (
     <div className="">
