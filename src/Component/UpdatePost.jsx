@@ -12,7 +12,7 @@ const UpdatePost = () => {
     title: "",
     existingLinkFlair: "",
     addLinkFlair: "",
-    content: "",j
+    content: "",
   });
  
   const [loading, setLoading] = useState(true);
