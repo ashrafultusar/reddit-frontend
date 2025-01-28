@@ -25,15 +25,6 @@ const AdminProfile = () => {
   }, []);
 
 
-
-  // Dummy data
-  const adminInfo = {
-    displayName: "Admin John Doe",
-    email: "admin@example.com",
-    memberSince: "January 1, 2020",
-    reputation: 999,
-  };
-
   const posts = [
     { id: 1, title: "Understanding React" },
     { id: 2, title: "Introduction to JavaScript" },
