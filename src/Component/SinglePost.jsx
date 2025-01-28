@@ -7,7 +7,6 @@ import { AuthContext } from "../Provider/AuthProvider";
 
 const SinglePost = ({ post }) => {
   const { user, userData } = useContext(AuthContext);
-  const [comments, setComments] = useState({});
   const [vote, setVote] = useState(post?.vote || 0);
   const [localUserVote, setLocalUserVote] = useState(null);
 
@@ -37,11 +36,6 @@ const SinglePost = ({ post }) => {
       .catch((err) => console.error(err));
   };
 
-  useEffect(() => {
-    axios(`http://localhost:8000/api/comments/${post?._id}`)
-      .then((res) => setComments(res?.data))
-      .catch((err) => console.error(err));
-  }, [post?._id]);
 
   return (
     <div className="card bg-white w-[550px] shadow-lg rounded-lg overflow-hidden border border-gray-200 mb-4">
@@ -79,7 +73,9 @@ const SinglePost = ({ post }) => {
           >
             <button
               disabled={
-                localUserVote?.voteType === "upvote" || userData?.reputation < 50 || !user
+                localUserVote?.voteType === "upvote" ||
+                userData?.reputation < 50 ||
+                !user
               }
               onClick={() =>
                 handleVote({
@@ -98,7 +94,8 @@ const SinglePost = ({ post }) => {
             <button
               disabled={
                 localUserVote?.voteType === "downvote" ||
-                userData?.reputation < 50 || !user
+                userData?.reputation < 50 ||
+                !user
               }
               onClick={() =>
                 handleVote({
@@ -109,13 +106,15 @@ const SinglePost = ({ post }) => {
             >
               <BiDownvote
                 className={`text-xl ${
-                  localUserVote?.voteType === "downvote" ? "text-orange-500" : ""
+                  localUserVote?.voteType === "downvote"
+                    ? "text-orange-500"
+                    : ""
                 }`}
               />
             </button>
           </span>
           <span>👁️ {post?.views || 0} Views</span>
-          <span>💬 {comments?.totalCommentCount || 0} Comments</span>
+          <span>💬 {post?.comments?.length || 0} Comments</span>
           <span className="text-blue-400 font-medium">
             <Link to={`/postD/${post._id}`}>View More</Link>
           </span>
