@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const CreateCommunity = () => {
-  const { user } = useContext(AuthContext);
+  const { user ,relode, setRelode} = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
@@ -57,6 +57,7 @@ const CreateCommunity = () => {
       .post("http://localhost:8000/api/communities", data)
       .then((res) => {
         toast.success("Community created successfully");
+        setRelode(!relode)
       })
       .catch((err) => {
         toast.error("An error occurred while creating the community.");

@@ -42,12 +42,14 @@ const PostDetails = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [error, setError] = useState(null);
+  const [commentCount, setCommentCount]= useState(0)
   
   useEffect(() => {
     axios(`http://localhost:8000/api/posts/${postId}`)
       .then((res) => setPost(res?.data))
       .catch((err) => setError(err?.message));
     viewCount();
+    getComments()
   }, [postId]);
 
   
@@ -58,6 +60,14 @@ const PostDetails = () => {
       .then((res) => console.log(res))
       .catch((err) => console.error(err));
   };
+
+  const getComments=()=>{
+    axios(`http://localhost:8000/api/comments/${postId}`)
+    .then((res) => setCommentCount(res?.data?.totalCommentCount))
+    .catch((err) => setError(err?.message));
+  }
+
+  console.log(commentCount);
 
   if (error) return <div>Error: {error}</div>; 
   if (!post) return <div>Loading...</div>; 
@@ -103,7 +113,7 @@ const PostDetails = () => {
             <div className="flex items-center justify-between text-sm text-gray-500 mt-4">
               <div className="flex space-x-4">
                 <span>👁️ {post?.views}</span>
-                <span>💬 4 Comments</span>
+                <span>💬 {commentCount} Comments</span>
               </div>
               <div>
                 <Link

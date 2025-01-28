@@ -185,7 +185,7 @@ const UserProfile = () => {
           </div>
         )}
         {activeTab === "comments" && (
-          <div>
+          <div >
             <h2 className="text-xl font-semibold mb-4">Comments</h2>
             {userComments?.length > 0 ? (
               userComments?.map((comment) => (
