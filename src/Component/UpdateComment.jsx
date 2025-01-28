@@ -75,11 +75,12 @@ const UpdateComment = () => {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/comments/single/${id}`);
+        const response = await axios.get(
+          `http://localhost:8000/api/comments/single/${id}`
+        );
         setCommentData(response.data);
       } catch (error) {
         console.error("Error fetching comment:", error);
-       
       }
     };
 
@@ -115,20 +116,28 @@ const UpdateComment = () => {
         onSubmit={handleUpdate}
         className="max-w-md mx-auto bg-white p-6 shadow-lg rounded-lg"
       >
-        <label htmlFor="comment" className="block text-gray-700 font-semibold mb-2">
+        <label
+          htmlFor="comment"
+          className="block text-gray-700 font-semibold mb-2"
+        >
           Type a comment: <span className="text-red-500">*</span>
         </label>
         <textarea
-                  id="comment"
-                  required
-                  defaultValue={commentData?.content}
+          id="comment"
+          required
+          defaultValue={commentData?.content}
           className="w-full h-24 bg-red-100 border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 mb-4"
           placeholder="Write your comment here..."
           value={commentData.content}
-          onChange={(e) => setCommentData({ ...commentData, content: e.target.value })}
+          onChange={(e) =>
+            setCommentData({ ...commentData, content: e.target.value })
+          }
         ></textarea>
 
-        <label htmlFor="username" className="block text-gray-700 font-semibold mb-2">
+        <label
+          htmlFor="username"
+          className="block text-gray-700 font-semibold mb-2"
+        >
           Username: <span className="text-red-500">*</span>
         </label>
         <input
@@ -158,4 +167,3 @@ const UpdateComment = () => {
 };
 
 export default UpdateComment;
-
