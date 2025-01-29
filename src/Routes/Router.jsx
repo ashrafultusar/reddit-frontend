@@ -14,6 +14,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import UpdateCommunity from "../Component/UpdateCommunity";
 import UpdatePost from "../Component/UpdatePost";
 import UpdateComment from "../Component/UpdateComment";
+import UpdateAdminCommunity from "../Admin/UpdateAdminCommunity";
 
 export const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ export const router = createBrowserRouter([
       {
         path: "/updateComment/:id",
         element: <UpdateComment></UpdateComment>,
+      },
+      {
+        path: "/updateAdminCommunity/:communityId",
+        element: <UpdateAdminCommunity></UpdateAdminCommunity>,
       },
     ],
   },

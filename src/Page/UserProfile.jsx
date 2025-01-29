@@ -93,7 +93,7 @@ const UserProfile = () => {
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
-      {/* User Information */}
+      {/* User Information */} 
       <div className="mb-6 bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-2xl font-bold">
           NAME:

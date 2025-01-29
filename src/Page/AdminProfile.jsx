@@ -4,11 +4,10 @@ import { ElapsedTime } from "../Component/PostDetails";
 import { Link } from "react-router-dom";
 
 const AdminProfile = () => {
-  const { user,userData } = useContext(AuthContext);
+  const { user, userData } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("users");
   const [communities, setCommunities] = useState([]);
   const [allUser, setAllUser] = useState([]);
-
 
   // all user load
   useEffect(() => {
@@ -26,14 +25,7 @@ const AdminProfile = () => {
 
 
 
-  // Dummy data
-  const adminInfo = {
-    displayName: "Admin John Doe",
-    email: "admin@example.com",
-    memberSince: "January 1, 2020",
-    reputation: 999,
-  };
-
+ 
   const posts = [
     { id: 1, title: "Understanding React" },
     { id: 2, title: "Introduction to JavaScript" },
@@ -43,9 +35,6 @@ const AdminProfile = () => {
     { id: 1, postTitle: "React Basics", comment: "React is amazing..." },
     { id: 2, postTitle: "JS Tips", comment: "Always use let and const..." },
   ];
-  console.log(userData);
-  
-
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
@@ -62,8 +51,8 @@ const AdminProfile = () => {
             <ElapsedTime timestamp={user?.metadata?.creationTime} />
           )}
         </p>
-      
-        <p>Reputation: { userData?.reputation}</p>
+
+        <p>Reputation: {userData?.reputation}</p>
       </div>
 
       {/* Tabs */}
@@ -121,7 +110,7 @@ const AdminProfile = () => {
                   <h3 className="font-bold">{user.displayName}</h3>
                   <p>Name: {user.name}</p>
                   <p>Email: {user.email}</p>
-                  <p>Reputation: { user?.reputation}</p>
+                  <p>Reputation: {user?.reputation}</p>
                 </div>
               </Link>
             ))}
@@ -131,7 +120,7 @@ const AdminProfile = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Communities</h2>
             {communities.map((community) => (
-              <Link>
+              <Link to={`/updateAdminCommunity/${community._id}`}>
                 {" "}
                 <div
                   key={community.id}
