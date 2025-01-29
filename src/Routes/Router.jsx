@@ -47,11 +47,11 @@ export const router = createBrowserRouter([
             <PostDetails></PostDetails>
           </PrivateRoute>
         ),
-      }, 
+      },
       {
         path: "community/:communityName",
         element: <ViewCommunity></ViewCommunity>,
-      }, 
+      },
       {
         path: "/user-profile",
         element: <UserProfile></UserProfile>,
@@ -63,18 +63,19 @@ export const router = createBrowserRouter([
       {
         path: "/comment-page/:id",
         element: <CommentPage></CommentPage>,
-      }, {
-        path: '/updateCommunity/:communityId',
-        element: <UpdateCommunity></UpdateCommunity>
+      },
+      {
+        path: "/updateCommunity/:communityId",
+        element: <UpdateCommunity></UpdateCommunity>,
       },
       {
         path: "/update-post/:id",
-        element:<UpdatePost></UpdatePost>
+        element: <UpdatePost></UpdatePost>,
       },
       {
-        path: '/updateComment/:id',
-        element:<UpdateComment></UpdateComment>
-      }
+        path: "/updateComment/:id",
+        element: <UpdateComment></UpdateComment>,
+      },
     ],
   },
 ]);

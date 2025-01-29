@@ -14,15 +14,17 @@ const UpdatePost = () => {
     addLinkFlair: "",
     content: "",
   });
- 
+
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
 
   // Fetch post data
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/posts/${id}`);
+        const response = await axios.get(
+          `http://localhost:8000/api/posts/${id}`
+        );
         setPostData(response.data);
         setLoading(false);
       } catch (error) {
@@ -141,13 +143,15 @@ const UpdatePost = () => {
           </button>
         </div>
       </form>
- 
+
       {/* Confirmation Modal */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-md shadow-md">
             <h2 className="text-lg font-semibold mb-4">Are you sure?</h2>
-            <p className="mb-4">This action will permanently delete the post.</p>
+            <p className="mb-4">
+              This action will permanently delete the post.
+            </p>
             <div className="flex justify-end space-x-4">
               <button
                 onClick={() => setShowModal(false)}

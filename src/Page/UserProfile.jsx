@@ -17,6 +17,9 @@ const UserProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCommunityId, setSelectedCommunityId] = useState(null);
 
+  const [comments,setComments]=useState([])
+
+
   const openModal = (communityId) => {
     setSelectedCommunityId(communityId);
     setIsModalOpen(true);
@@ -74,14 +77,15 @@ const UserProfile = () => {
     }
   }, [user]);
 
-  // // all comment fetch
-  // const [comments, setComments] = useState();
-  // useEffect(() => {
-  //   axios(`http://localhost:8000/api/comments/all`)
-  //     .then((res) => setComments(res?.data))
-  //     .catch((err) => console.error(err));
-  // }, []);
-  console.log(userComments);
+   // all user load
+   useEffect(() => {
+    fetch("http://localhost:8000/api/comments/all")
+      .then((response) => response.json())
+      .then((data) => setComments(data));
+  }, []);
+
+
+  console.log(comments);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -191,7 +195,7 @@ const UserProfile = () => {
             {userComments?.length > 0 ? (
               userComments?.map((comment) => (
                 <Link to={`/updateComment/${comment?._id}`}>
-                  {" "}
+                
                   <div
                     key={comment?._id}
                     className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
