@@ -34,13 +34,14 @@ const AdminProfile = () => {
       .then((data) => setComments(data));
   }, []);
 
+  // all post load
   useEffect(() => {
     fetch("http://localhost:8000/api/posts")
       .then((response) => response.json())
       .then((data) => setPosts(data));
   }, []);
 
-  console.log(posts);
+  console.log(allUser);
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
@@ -107,7 +108,8 @@ const AdminProfile = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Phreddit Users</h2>
             {allUser.map((user) => (
-              <Link to={'/userInfo'}>
+              
+              <Link to={`/userInfo/${user?.email}`}>
               
                 <div
                   key={user._id}

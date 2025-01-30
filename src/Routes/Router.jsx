@@ -92,7 +92,7 @@ export const router = createBrowserRouter([
         path: "/adminUpdatePost/:postId",
         element: <AdminUpdatePost></AdminUpdatePost>,
       }, {
-        path: '/userInfo',
+        path: '/userInfo/:email',
         element:<UserInfo></UserInfo>
       }
     ],
