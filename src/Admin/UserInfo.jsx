@@ -3,15 +3,11 @@ import { AuthContext } from "./../Provider/AuthProvider";
 import { ElapsedTime } from "../Component/PostDetails";
 import { Link, useNavigate } from "react-router-dom";
 
-const AdminProfile = () => {
+const UserInfo = () => {
   const { user, userData } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("users");
-  const [communities, setCommunities] = useState([]);
-  const [allUser, setAllUser] = useState([]);
-  const [comments, setComments] = useState([]);
-  const [posts, setPosts] = useState([]);
+ 
 
-  const navigate = useNavigate();
 
   // all user load
   useEffect(() => {
@@ -20,32 +16,16 @@ const AdminProfile = () => {
       .then((data) => setAllUser(data));
   }, []);
 
-  // all community load
-  useEffect(() => {
-    fetch("http://localhost:8000/api/communities")
-      .then((response) => response.json())
-      .then((data) => setCommunities(data));
-  }, []);
+  
 
-  // all comments load
-  useEffect(() => {
-    fetch("http://localhost:8000/api/comments/all")
-      .then((response) => response.json())
-      .then((data) => setComments(data));
-  }, []);
+  
 
-  useEffect(() => {
-    fetch("http://localhost:8000/api/posts")
-      .then((response) => response.json())
-      .then((data) => setPosts(data));
-  }, []);
-
-  console.log(posts);
+  
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
       {/* Admin Info */}
-      <div className="mb-6 bg-white shadow-lg rounded-lg p-6">
+      <div className="mb-6 bg-white shadow-lg rounded-lg p-6 text-center">
         <h1 className="text-2xl font-bold">
           NAME:{" "}
           <span className="font-medium uppercase">{user?.displayName}</span>{" "}
@@ -106,9 +86,9 @@ const AdminProfile = () => {
         {activeTab === "users" && (
           <div>
             <h2 className="text-xl font-semibold mb-4">Phreddit Users</h2>
-            {allUser.map((user) => (
-              <Link to={'/userInfo'}>
-              
+            {/* {allUser.map((user) => (
+              <Link>
+                {" "}
                 <div
                   key={user._id}
                   className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm border"
@@ -119,13 +99,13 @@ const AdminProfile = () => {
                   <p>Reputation: {user?.reputation}</p>
                 </div>
               </Link>
-            ))}
+            ))} */}
           </div>
         )}
         {activeTab === "communities" && (
           <div>
             <h2 className="text-xl font-semibold mb-4">Communities</h2>
-            {communities.map((community) => (
+            {/* {communities.map((community) => (
               <Link to={`/updateAdminCommunity/${community._id}`}>
                 {" "}
                 <div
@@ -139,13 +119,13 @@ const AdminProfile = () => {
                   </h3>
                 </div>
               </Link>
-            ))}
+            ))} */}
           </div>
         )}
         {activeTab === "posts" && (
           <div>
             <h2 className="text-xl font-semibold mb-4">Posts</h2>
-            {posts.map((post) => (
+            {/* {posts.map((post) => (
               <Link to={`/adminUpdatePost/${post._id}`}>
                 <div
                   key={post.id}
@@ -158,13 +138,13 @@ const AdminProfile = () => {
                   </h3>
                 </div>
               </Link>
-            ))}
+            ))} */}
           </div>
         )}
         {activeTab === "comments" && (
           <div>
             <h2 className="text-xl font-semibold mb-4">Comments</h2>
-            {comments.map((comment) => (
+            {/* {comments.map((comment) => (
               <Link to={`/updateAdminComment/${comment._id}`} key={comment._id}>
                 {" "}
                 <div
@@ -178,7 +158,7 @@ const AdminProfile = () => {
                   </p>
                 </div>
               </Link>
-            ))}
+            ))} */}
           </div>
         )}
       </div>
@@ -186,4 +166,4 @@ const AdminProfile = () => {
   );
 };
 
-export default AdminProfile;
+export default UserInfo;
