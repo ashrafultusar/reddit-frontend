@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./../Provider/AuthProvider";
 import { ElapsedTime } from "../Component/PostDetails";
@@ -10,6 +9,8 @@ const AdminProfile = () => {
   const [communities, setCommunities] = useState([]);
   const [allUser, setAllUser] = useState([]);
   const [comments, setComments] = useState([]);
+  const [posts, setPosts] = useState([]);
+
   const navigate = useNavigate();
 
   // all user load
@@ -33,10 +34,13 @@ const AdminProfile = () => {
       .then((data) => setComments(data));
   }, []);
 
-  const posts = [
-    { id: 1, title: "Understanding React" },
-    { id: 2, title: "Introduction to JavaScript" },
-  ];
+  useEffect(() => {
+    fetch("http://localhost:8000/api/posts")
+      .then((response) => response.json())
+      .then((data) => setPosts(data));
+  }, []);
+
+  console.log(posts);
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
@@ -128,7 +132,11 @@ const AdminProfile = () => {
                   key={community.id}
                   className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm border "
                 >
-                  <h3 className="font-bold"> {community.communityName}</h3>
+                  <h3 className="font-bold">
+                    {community?.communityName?.length > 20
+                      ? community?.communityName?.substring(0, 20) + "..."
+                      : community?.communityName}
+                  </h3>
                 </div>
               </Link>
             ))}
@@ -138,14 +146,18 @@ const AdminProfile = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Posts</h2>
             {posts.map((post) => (
-              <div
-                key={post.id}
-                className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
-              >
-                <h3 className="font-bold">{post.title}</h3>
-                <button className="text-blue-500 mr-4">Edit</button>
-                <button className="text-red-500">Delete</button>
-              </div>
+              <Link to={"/adminUpdatePost"}>
+                <div
+                  key={post.id}
+                  className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
+                >
+                  <h3 className="font-bold">
+                    {post?.title?.length > 20
+                      ? post?.title?.substring(0, 20) + "..."
+                      : post?.title}
+                  </h3>
+                </div>
+              </Link>
             ))}
           </div>
         )}

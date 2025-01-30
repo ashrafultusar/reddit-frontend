@@ -16,6 +16,7 @@ import UpdatePost from "../Component/UpdatePost";
 import UpdateComment from "../Component/UpdateComment";
 import UpdateAdminCommunity from "../Admin/UpdateAdminCommunity";
 import UpdateAdminComment from "../Admin/UpdateAdminComment";
+import AdminUpdatePost from "../Admin/AdminUpdatePost";
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ export const router = createBrowserRouter([
       {
         path: "/updateAdminComment/:commentId",
         element: <UpdateAdminComment></UpdateAdminComment>,
+      },
+      {
+        path: "/adminUpdatePost",
+        element: <AdminUpdatePost></AdminUpdatePost>,
       },
     ],
   },

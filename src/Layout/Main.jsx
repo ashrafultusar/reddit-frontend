@@ -5,11 +5,10 @@ import axios from "axios";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Main = () => {
-  const isDarkMode = true; 
-  const { user, relode } = useContext(AuthContext); 
-  const navigate = useNavigate(); 
+  const isDarkMode = true;
+  const { user, relode } = useContext(AuthContext);
+  const navigate = useNavigate();
 
- 
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
@@ -22,7 +21,7 @@ const Main = () => {
           const userJoinedB = user?.joinedCommunities?.includes(b._id);
           return userJoinedA === userJoinedB ? 0 : userJoinedA ? -1 : 1;
         });
-        setData(sortedData); 
+        setData(sortedData);
       })
       .catch((error) => {
         console.error("Error fetching communities:", error);
@@ -48,11 +47,11 @@ const Main = () => {
             {/* Home Link */}
             <li>
               <NavLink
-                to={user ? "/" : "/login"} 
+                to={user ? "/" : "/login"}
                 onClick={(e) => {
                   if (!user) {
-                    e.preventDefault(); 
-                    navigate("/login", { state: { from: "/" } }); 
+                    e.preventDefault();
+                    navigate("/login", { state: { from: "/" } });
                   }
                 }}
                 end
@@ -110,7 +109,9 @@ const Main = () => {
                     to={`/community/${community.communityName}`}
                     className="flex items-center justify-center bg-gray-200 rounded-md"
                   >
-                    {community?.communityName}
+                    {community?.communityName?.length > 15
+                      ? community?.communityName?.substring(0, 15) + "..."
+                      : community?.communityName}
                   </NavLink>
                 </li>
               ))
