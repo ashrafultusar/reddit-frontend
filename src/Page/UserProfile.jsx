@@ -76,8 +76,9 @@ const UserProfile = () => {
       fetchUserData();
     }
   }, [user]);
-
-   // all user load
+ 
+  // all user load
+  
    useEffect(() => {
     fetch("http://localhost:8000/api/comments/all")
       .then((response) => response.json())

@@ -1,13 +1,16 @@
+
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./../Provider/AuthProvider";
 import { ElapsedTime } from "../Component/PostDetails";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AdminProfile = () => {
   const { user, userData } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("users");
   const [communities, setCommunities] = useState([]);
   const [allUser, setAllUser] = useState([]);
+  const [comments, setComments] = useState([]);
+  const navigate = useNavigate();
 
   // all user load
   useEffect(() => {
@@ -23,17 +26,16 @@ const AdminProfile = () => {
       .then((data) => setCommunities(data));
   }, []);
 
+  // all comments load
+  useEffect(() => {
+    fetch("http://localhost:8000/api/comments/all")
+      .then((response) => response.json())
+      .then((data) => setComments(data));
+  }, []);
 
-
- 
   const posts = [
     { id: 1, title: "Understanding React" },
     { id: 2, title: "Introduction to JavaScript" },
-  ];
-
-  const comments = [
-    { id: 1, postTitle: "React Basics", comment: "React is amazing..." },
-    { id: 2, postTitle: "JS Tips", comment: "Always use let and const..." },
   ];
 
   return (
@@ -151,15 +153,19 @@ const AdminProfile = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Comments</h2>
             {comments.map((comment) => (
-              <div
-                key={comment.id}
-                className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
-              >
-                <h3 className="font-bold">{comment.postTitle}</h3>
-                <p className="text-gray-700">{comment.comment}</p>
-                <button className="text-blue-500 mr-4">Edit</button>
-                <button className="text-red-500">Delete</button>
-              </div>
+              <Link to={`/updateAdminComment/${comment._id}`} key={comment._id}>
+                {" "}
+                <div
+                  key={comment.id}
+                  className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
+                >
+                  <p className="text-gray-700">
+                    {comment?.content?.length > 20
+                      ? comment?.content?.substring(0, 20) + "..."
+                      : comment?.content}
+                  </p>
+                </div>
+              </Link>
             ))}
           </div>
         )}
