@@ -146,7 +146,7 @@ const AdminProfile = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Posts</h2>
             {posts.map((post) => (
-              <Link to={"/adminUpdatePost"}>
+              <Link to={`/adminUpdatePost/${post._id}`}>
                 <div
                   key={post.id}
                   className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"

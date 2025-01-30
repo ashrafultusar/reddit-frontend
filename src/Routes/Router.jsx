@@ -88,7 +88,7 @@ export const router = createBrowserRouter([
         element: <UpdateAdminComment></UpdateAdminComment>,
       },
       {
-        path: "/adminUpdatePost",
+        path: "/adminUpdatePost/:postId",
         element: <AdminUpdatePost></AdminUpdatePost>,
       },
     ],

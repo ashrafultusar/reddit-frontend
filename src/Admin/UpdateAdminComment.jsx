@@ -9,7 +9,7 @@ const UpdateAdminComment = () => {
   const { user } = useContext(AuthContext);
   const [commentData, setCommentData] = useState({ content: "" });
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-
+ 
   useEffect(() => {
     const fetchComment = async () => {
       try {
