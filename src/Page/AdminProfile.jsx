@@ -41,7 +41,7 @@ const AdminProfile = () => {
       .then((data) => setPosts(data));
   }, []);
 
-  console.log(allUser);
+
 
   return (
     <div className="p-4 max-w-6xl mx-auto">

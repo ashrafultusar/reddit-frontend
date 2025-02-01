@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const UserInfo = () => {
   const { email } = useParams(); // Extract the email from the URL
@@ -128,13 +128,15 @@ const UserInfo = () => {
             <h2 className="text-xl font-semibold mb-4">Communities</h2>
             {filteredCommunities.length > 0 ? (
               filteredCommunities.map((community) => (
-                <div
-                  key={community._id}
-                  className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm border"
-                >
-                  <h3 className="font-bold">{community.communityName}</h3>
-                
-                </div>
+                <Link to={`/communitiesManage/${community._id}`}>
+                  {" "}
+                  <div
+                    key={community._id}
+                    className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm border"
+                  >
+                    <h3 className="font-bold">{community.communityName}</h3>
+                  </div>
+                </Link>
               ))
             ) : (
               <p>No communities found for this user.</p>
@@ -147,17 +149,19 @@ const UserInfo = () => {
             <h2 className="text-xl font-semibold mb-4">Posts</h2>
             {filteredPosts.length > 0 ? (
               filteredPosts.map((post) => (
-                <div
-                  key={post._id}
-                  className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
-                >
-                  <h3 className="font-bold">
-                    {post.title?.length > 20
-                      ? post.title.substring(0, 20) + "..."
-                      : post.title}
-                  </h3>
-                 
-                </div>
+                <Link to={`/communities/${post._id}`}>
+                  {" "}
+                  <div
+                    key={post._id}
+                    className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
+                  >
+                    <h3 className="font-bold">
+                      {post.title?.length > 20
+                        ? post.title.substring(0, 20) + "..."
+                        : post.title}
+                    </h3>
+                  </div>
+                </Link>
               ))
             ) : (
               <p>No posts found for this user.</p>
@@ -170,17 +174,19 @@ const UserInfo = () => {
             <h2 className="text-xl font-semibold mb-4">Comments</h2>
             {filteredComments.length > 0 ? (
               filteredComments.map((comment) => (
-                <div
-                  key={comment._id}
-                  className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
-                >
-                  <p className="text-gray-700">
-                    {comment.content?.length > 20
-                      ? comment.content.substring(0, 20) + "..."
-                      : comment.content}
-                  </p>
-                
-                </div>
+                <Link to={`/comments${comment._id}`}>
+                  {" "}
+                  <div
+                    key={comment._id}
+                    className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
+                  >
+                    <p className="text-gray-700">
+                      {comment.content?.length > 20
+                        ? comment.content.substring(0, 20) + "..."
+                        : comment.content}
+                    </p>
+                  </div>
+                </Link>
               ))
             ) : (
               <p>No comments found for this user.</p>

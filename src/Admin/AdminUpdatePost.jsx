@@ -6,7 +6,7 @@ const AdminUpdatePost = () => {
   const { user } = useContext(AuthContext);
   const { postId } = useParams();
   const navigate = useNavigate();
-
+// return console.log(postId);
   const [postData, setPostData] = useState({
     communityName: "",
     title: "",

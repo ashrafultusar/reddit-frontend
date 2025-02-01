@@ -18,6 +18,9 @@ import UpdateAdminCommunity from "../Admin/UpdateAdminCommunity";
 import UpdateAdminComment from "../Admin/UpdateAdminComment";
 import AdminUpdatePost from "../Admin/AdminUpdatePost";
 import UserInfo from "../Admin/UserInfo";
+import CommunitiesManage from "../Admin/UserManagement/CommunitiesManage";
+import PostsManage from "../Admin/UserManagement/PostsManage";
+import CommentsManage from "../Admin/UserManagement/CommentsManage";
 
 export const router = createBrowserRouter([
   {
@@ -91,10 +94,27 @@ export const router = createBrowserRouter([
       {
         path: "/adminUpdatePost/:postId",
         element: <AdminUpdatePost></AdminUpdatePost>,
-      }, {
-        path: '/userInfo/:email',
-        element:<UserInfo></UserInfo>
-      }
+      },
+      {
+        path: "/userInfo/:email",
+        element: <UserInfo></UserInfo>,
+      },
+
+      {
+        path: "/communitiesManage/:communityMId",
+        element: <CommunitiesManage></CommunitiesManage>,
+      },
+
+
+
+      {
+        path: "/postsManage/:postMId",
+        element: <PostsManage></PostsManage>,
+      },
+      {
+        path: "/commentsManage/:commentMId",
+        element: <CommentsManage></CommentsManage>,
+      },
     ],
   },
 ]);
