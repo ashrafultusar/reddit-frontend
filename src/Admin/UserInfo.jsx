@@ -149,7 +149,7 @@ const UserInfo = () => {
             <h2 className="text-xl font-semibold mb-4">Posts</h2>
             {filteredPosts.length > 0 ? (
               filteredPosts.map((post) => (
-                <Link to={`/communities/${post._id}`}>
+                <Link to={`/postsManage/${post._id}`}>
                   {" "}
                   <div
                     key={post._id}

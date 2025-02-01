@@ -105,8 +105,6 @@ export const router = createBrowserRouter([
         element: <CommunitiesManage></CommunitiesManage>,
       },
 
-
-
       {
         path: "/postsManage/:postMId",
         element: <PostsManage></PostsManage>,
