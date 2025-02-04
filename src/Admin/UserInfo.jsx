@@ -174,7 +174,7 @@ const UserInfo = () => {
             <h2 className="text-xl font-semibold mb-4">Comments</h2>
             {filteredComments.length > 0 ? (
               filteredComments.map((comment) => (
-                <Link to={`/comments${comment._id}`}>
+                <Link to={`/commentsManage/${comment._id}`}>
                   {" "}
                   <div
                     key={comment._id}
