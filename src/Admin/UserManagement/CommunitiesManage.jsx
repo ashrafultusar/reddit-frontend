@@ -55,7 +55,7 @@ const CommunitiesManage = () => {
 
       if (response.ok) {
           toast.success("Community updated successfully!");
-          navigate('/userInfo')
+          navigate('/admin-profile')
       } else {
         toast.error("Failed to update community.");
       }
