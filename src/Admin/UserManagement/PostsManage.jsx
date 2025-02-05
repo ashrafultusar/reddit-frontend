@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { AuthContext } from "../../Provider/AuthProvider";
 
-const UpdatePost = () => {
-  const { id } = useParams();
+const AdminUpdatePost = () => {
+  const { user } = useContext(AuthContext);
+  const { postMId } = useParams();
   const navigate = useNavigate();
-
+// return console.log(postId);
   const [postData, setPostData] = useState({
     communityName: "",
     title: "",
@@ -15,66 +15,67 @@ const UpdatePost = () => {
     content: "",
   });
 
-  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  // Fetch post data
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/api/posts/${id}`
-        );
-        setPostData(response.data);
-        setLoading(false);
+        const response = await fetch(`http://localhost:8000/api/posts/${postMId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch post");
+        }
+        const data = await response.json();
+        setPostData(data);
       } catch (error) {
-        console.error("Error fetching post:", error.message);
-        toast.error("Failed to load post data!");
+        console.error("Error fetching post:", error);
       }
     };
     fetchPost();
-  }, [id]);
+  }, [postMId]);
 
-  // Handle input changes
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPostData((prev) => ({ ...prev, [name]: value }));
+    setPostData({ ...postData, [e.target.name]: e.target.value });
   };
 
-  // Handle post update
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:8000/api/posts/${id}`, postData);
-      toast.success("Post updated successfully!");
-      navigate("/user-profile");
+      const response = await fetch(`http://localhost:8000/api/posts/${postMId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(postData),
+      });
+
+      if (response.ok) {
+        navigate("/admin-profile");
+      } else {
+        console.error("Failed to update post");
+      }
     } catch (error) {
-      console.error("Error updating post:", error.message);
-      toast.error("Failed to update post!");
+      console.error("Error updating post:", error);
     }
   };
 
-  // Handle post delete
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8000/api/posts/${id}`);
-      toast.success("Post deleted successfully!");
-      setShowModal(false);
-      navigate("/user-profile");
+      const response = await fetch(`http://localhost:8000/api/posts/${postMId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        navigate("/admin-profile");
+      } else {
+        console.error("Failed to delete post");
+      }
     } catch (error) {
-      console.error("Error deleting post:", error.message);
-      toast.error("Failed to delete post!");
+      console.error("Error deleting post:", error);
     }
   };
-
-  if (loading) {
-    return <div>Loading post data...</div>;
-  }
 
   return (
     <div className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-center">Update Pos</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="text-2xl font-bold mb-4 text-center">Update Post</h2>
+      <form onSubmit={handleUpdate} className="space-y-4">
         <div>
           <label className="block text-gray-700">Community Name</label>
           <input
@@ -128,10 +129,7 @@ const UpdatePost = () => {
           ></textarea>
         </div>
         <div className="flex justify-between">
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
             Update Post
           </button>
           <button
@@ -149,20 +147,12 @@ const UpdatePost = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-md shadow-md">
             <h2 className="text-lg font-semibold mb-4">Are you sure?</h2>
-            <p className="mb-4">
-              This action will permanently delete the post.
-            </p>
+            <p className="mb-4">This action will permanently delete the post.</p>
             <div className="flex justify-end space-x-4">
-              <button
-                onClick={() => setShowModal(false)}
-                className="bg-gray-300 px-4 py-2 rounded-md"
-              >
+              <button onClick={() => setShowModal(false)} className="bg-gray-300 px-4 py-2 rounded-md">
                 Cancel
               </button>
-              <button
-                onClick={handleDelete}
-                className="bg-red-600 text-white px-4 py-2 rounded-md"
-              >
+              <button onClick={handleDelete} className="bg-red-600 text-white px-4 py-2 rounded-md">
                 Delete
               </button>
             </div>
@@ -173,4 +163,4 @@ const UpdatePost = () => {
   );
 };
 
-export default UpdatePost;
+export default AdminUpdatePost;

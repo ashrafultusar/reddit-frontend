@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./../Provider/AuthProvider";
 import { ElapsedTime } from "../Component/PostDetails";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AdminProfile = () => {
-  const { user,userData } = useContext(AuthContext);
+  const { user, userData } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("users");
   const [communities, setCommunities] = useState([]);
   const [allUser, setAllUser] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [posts, setPosts] = useState([]);
 
+  const navigate = useNavigate();
 
   // all user load
   useEffect(() => {
@@ -24,18 +27,20 @@ const AdminProfile = () => {
       .then((data) => setCommunities(data));
   }, []);
 
+  // all comments load
+  useEffect(() => {
+    fetch("http://localhost:8000/api/comments/all")
+      .then((response) => response.json())
+      .then((data) => setComments(data));
+  }, []);
 
-  const posts = [
-    { id: 1, title: "Understanding React" },
-    { id: 2, title: "Introduction to JavaScript" },
-  ];
+  // all post load
+  useEffect(() => {
+    fetch("http://localhost:8000/api/posts")
+      .then((response) => response.json())
+      .then((data) => setPosts(data));
+  }, []);
 
-  const comments = [
-    { id: 1, postTitle: "React Basics", comment: "React is amazing..." },
-    { id: 2, postTitle: "JS Tips", comment: "Always use let and const..." },
-  ];
-  console.log(userData);
-  
 
 
   return (
@@ -53,8 +58,8 @@ const AdminProfile = () => {
             <ElapsedTime timestamp={user?.metadata?.creationTime} />
           )}
         </p>
-      
-        <p>Reputation: { userData?.reputation}</p>
+
+        <p>Reputation: {userData?.reputation}</p>
       </div>
 
       {/* Tabs */}
@@ -103,8 +108,9 @@ const AdminProfile = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Phreddit Users</h2>
             {allUser.map((user) => (
-              <Link>
-                {" "}
+              
+              <Link to={`/userInfo/${user?.email}`}>
+              
                 <div
                   key={user._id}
                   className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm border"
@@ -112,7 +118,7 @@ const AdminProfile = () => {
                   <h3 className="font-bold">{user.displayName}</h3>
                   <p>Name: {user.name}</p>
                   <p>Email: {user.email}</p>
-                  <p>Reputation: { user?.reputation}</p>
+                  <p>Reputation: {user?.reputation}</p>
                 </div>
               </Link>
             ))}
@@ -122,13 +128,17 @@ const AdminProfile = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Communities</h2>
             {communities.map((community) => (
-              <Link>
+              <Link to={`/updateAdminCommunity/${community._id}`}>
                 {" "}
                 <div
                   key={community.id}
                   className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm border "
                 >
-                  <h3 className="font-bold"> {community.communityName}</h3>
+                  <h3 className="font-bold">
+                    {community?.communityName?.length > 20
+                      ? community?.communityName?.substring(0, 20) + "..."
+                      : community?.communityName}
+                  </h3>
                 </div>
               </Link>
             ))}
@@ -138,14 +148,18 @@ const AdminProfile = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Posts</h2>
             {posts.map((post) => (
-              <div
-                key={post.id}
-                className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
-              >
-                <h3 className="font-bold">{post.title}</h3>
-                <button className="text-blue-500 mr-4">Edit</button>
-                <button className="text-red-500">Delete</button>
-              </div>
+              <Link to={`/adminUpdatePost/${post._id}`}>
+                <div
+                  key={post.id}
+                  className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
+                >
+                  <h3 className="font-bold">
+                    {post?.title?.length > 20
+                      ? post?.title?.substring(0, 20) + "..."
+                      : post?.title}
+                  </h3>
+                </div>
+              </Link>
             ))}
           </div>
         )}
@@ -153,15 +167,19 @@ const AdminProfile = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Comments</h2>
             {comments.map((comment) => (
-              <div
-                key={comment.id}
-                className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
-              >
-                <h3 className="font-bold">{comment.postTitle}</h3>
-                <p className="text-gray-700">{comment.comment}</p>
-                <button className="text-blue-500 mr-4">Edit</button>
-                <button className="text-red-500">Delete</button>
-              </div>
+              <Link to={`/updateAdminComment/${comment._id}`} key={comment._id}>
+                {" "}
+                <div
+                  key={comment.id}
+                  className="bg-gray-100 p-4 mb-2 rounded-lg shadow-sm"
+                >
+                  <p className="text-gray-700">
+                    {comment?.content?.length > 20
+                      ? comment?.content?.substring(0, 20) + "..."
+                      : comment?.content}
+                  </p>
+                </div>
+              </Link>
             ))}
           </div>
         )}
